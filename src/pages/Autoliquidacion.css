@@ -1,0 +1,190 @@
+/* ============================================
+   ESTILOS: Autoliquidación de Sanciones
+   ============================================ */
+
+.autoliquidacion-page {
+  max-width: var(--max-width-xl);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.page-header h1 {
+  font-size: var(--text-3xl);
+  margin-bottom: var(--space-xs);
+}
+
+.page-header p {
+  color: var(--color-text-secondary);
+}
+
+/* Tipo selector */
+.tipo-selector {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.tipo-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-lg);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+  cursor: pointer;
+}
+
+.tipo-btn:hover {
+  border-color: var(--color-border-dark);
+  color: var(--color-text-primary);
+}
+
+.tipo-btn.active {
+  background-color: var(--color-primary);
+  color: var(--color-text-inverse);
+  border-color: var(--color-primary);
+}
+
+/* Banner info */
+.banner-info {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+  background-color: rgba(107, 143, 163, 0.12);
+  border: 1px solid var(--color-info);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  color: var(--color-info-dark);
+}
+
+.banner-link {
+  margin-left: auto;
+  color: var(--color-info);
+  font-weight: 500;
+  text-decoration: underline;
+}
+
+/* Grid */
+.autoliq-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-lg);
+}
+
+/* Form fields */
+.form-fields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  margin-top: var(--space-md);
+}
+
+.comparativa-fechas {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  padding: var(--space-sm) var(--space-md);
+  background-color: var(--color-background);
+  border-radius: var(--radius-md);
+}
+
+/* Desglose */
+.calculo-desglose {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin: var(--space-md) 0;
+}
+
+.desglose-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  padding: var(--space-xs) 0;
+}
+
+.desglose-reduccion {
+  color: var(--color-success-dark);
+  font-weight: 500;
+}
+
+.reduccion-label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.reduccion-valor {
+  color: var(--color-success);
+  font-weight: 600;
+}
+
+.desglose-divider {
+  height: 1px;
+  background-color: var(--color-border);
+  margin: var(--space-xs) 0;
+}
+
+.desglose-subtotal {
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+.desglose-total {
+  font-size: var(--text-lg);
+  font-weight: 700;
+  color: var(--color-text-primary);
+  padding-top: var(--space-sm);
+}
+
+/* Ahorro badge */
+.ahorro-badge {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-md);
+  background-color: rgba(125, 154, 140, 0.08);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-md);
+}
+
+.ahorro-texto {
+  font-size: var(--text-sm);
+  color: var(--color-success-dark);
+}
+
+/* Nota legal */
+.nota-legal {
+  display: flex;
+  gap: var(--space-sm);
+  align-items: flex-start;
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+.nota-legal p {
+  margin: 0;
+  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .autoliq-grid { grid-template-columns: 1fr; }
+  .tipo-selector { flex-direction: column; }
+}
