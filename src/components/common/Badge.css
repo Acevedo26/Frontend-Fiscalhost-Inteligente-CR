@@ -1,0 +1,52 @@
+/* ============================================
+   ESTILOS: Badge
+   ============================================ */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-body);
+  font-weight: 500;
+  border-radius: var(--radius-full);
+  white-space: nowrap;
+}
+
+/* Tamaños */
+.badge-sm {
+  padding: 2px 8px;
+  font-size: 0.625rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.badge-md {
+  padding: 4px 10px;
+  font-size: var(--text-xs);
+}
+
+/* Variantes de color */
+.badge-default {
+  background-color: var(--color-background);
+  color: var(--color-text-secondary);
+}
+
+.badge-success {
+  background-color: rgba(125, 154, 140, 0.15);
+  color: var(--color-success-dark);
+}
+
+.badge-warning {
+  background-color: rgba(212, 168, 83, 0.15);
+  color: var(--color-warning-dark);
+}
+
+.badge-danger {
+  background-color: rgba(201, 112, 112, 0.15);
+  color: var(--color-danger-dark);
+}
+
+.badge-info {
+  background-color: rgba(107, 143, 163, 0.15);
+  color: var(--color-info-dark);
+}
