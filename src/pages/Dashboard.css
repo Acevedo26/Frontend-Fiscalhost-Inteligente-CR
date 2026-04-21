@@ -344,13 +344,14 @@
 .chart-svg-wrap {
   position: relative;
   width: 100%;
+  overflow: hidden;
 }
 
 .chart-svg {
   width: 100%;
-  height: auto;
+  max-height: 280px;
   display: block;
-  overflow: visible;
+  overflow: hidden;
 }
 
 .chart-period {

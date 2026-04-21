@@ -38,19 +38,25 @@ const chartData = [
   { mes: 'Abr', ingresos: 198000, gastos: 45000, obligaciones: 25740 },
   { mes: 'May', ingresos: 312000, gastos: 72000, obligaciones: 40560 },
   { mes: 'Jun', ingresos: 245000, gastos: 58000, obligaciones: 31850 },
+  { mes: 'Jul', ingresos: 278000, gastos: 63000, obligaciones: 36140 },
+  { mes: 'Ago', ingresos: 301000, gastos: 69000, obligaciones: 39130 },
+  { mes: 'Set', ingresos: 223000, gastos: 51000, obligaciones: 28990 },
+  { mes: 'Oct', ingresos: 267000, gastos: 60000, obligaciones: 34710 },
+  { mes: 'Nov', ingresos: 334000, gastos: 78000, obligaciones: 43420 },
+  { mes: 'Dic', ingresos: 410000, gastos: 95000, obligaciones: 53300 },
 ];
 
 // ── Gráfico: dimensiones con padding ──
-const W = 500;          // ancho total del viewBox
-const H = 200;          // alto total del viewBox
-const PAD_L = 52;       // espacio para eje Y
-const PAD_R = 12;
-const PAD_T = 16;
-const PAD_B = 28;       // espacio para etiquetas X
+const W = 500;
+const H = 180;
+const PAD_L = 52;
+const PAD_R = 16;
+const PAD_T = 12;
+const PAD_B = 24;
 const PLOT_W = W - PAD_L - PAD_R;
 const PLOT_H = H - PAD_T - PAD_B;
-const MAX_VAL = 340000;
-const Y_TICKS = [0, 100000, 200000, 300000];
+const MAX_VAL = 450000;
+const Y_TICKS = [0, 100000, 200000, 300000, 400000];
 
 const toX = (i: number) => PAD_L + (i / (chartData.length - 1)) * PLOT_W;
 const toY = (v: number) => PAD_T + PLOT_H - (v / MAX_VAL) * PLOT_H;
@@ -210,8 +216,8 @@ export const Dashboard: React.FC<DashboardProps> = ({ userName = 'Lisbeth Fallas
         <div className="card-header">
           <h3>Evolución Mensual</h3>
           <select className="chart-period">
-            <option>Últimos 6 meses</option>
             <option>Último año</option>
+            <option>Últimos 6 meses</option>
           </select>
         </div>
 
