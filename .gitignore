@@ -29,3 +29,15 @@ dist-ssr
 obj/
 .atl/
 .agents/ 
+
+# Local and sensitive artifacts
+.env
+.env.*
+!.env.example
+*.p12
+*.pem
+*.key
+sandbox_resource/
+src/**/*.local.*
+odd/
+GEMINI.md
