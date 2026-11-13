@@ -1,17 +1,24 @@
 /* ============================================
    COMPONENTE: Layout
    Descripción: Contenedor principal de la aplicación
+   FiscalHost Inteligente CR
    ============================================ */
 
-import React, { useState } from 'react';
-import { Outlet } from 'react-router-dom';
+import { useState } from 'react';
+import type { FC } from 'react';
+import { Outlet, Navigate } from 'react-router-dom';
 import { Sidebar } from './Sidebar';
 import { Header } from './Header';
+import { FisCal } from '../common/FisCal';
 import './Layout.css';
 
-export const Layout: React.FC = () => {
+export const Layout: FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
+  if (!localStorage.getItem('token')) {
+    return <Navigate to="/login" replace />;
+  }
+  
   return (
     <div className="layout">
       <Sidebar 
@@ -24,6 +31,7 @@ export const Layout: React.FC = () => {
           <Outlet />
         </main>
       </div>
+      <FisCal />
     </div>
   );
 };

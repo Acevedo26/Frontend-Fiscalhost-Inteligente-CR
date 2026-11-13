@@ -1,9 +1,11 @@
 /* ============================================
    COMPONENTE: FisCal (Asistente Virtual)
    Descripción: Asistente contextual flotante
+   FiscalHost Inteligente CR
    ============================================ */
 
-import React, { useState } from 'react';
+import { useState } from 'react';
+import type { FC } from 'react';
 import './FisCal.css';
 
 interface FisCalMessage {
@@ -17,7 +19,7 @@ const defaultMessages: FisCalMessage[] = [
   { id: '2', type: 'sugerencia', message: 'Veo que tienes ingresos sin clasificar. ¿Te ayudo a revisarlos?' },
 ];
 
-export const FisCal: React.FC = () => {
+export const FisCal: FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isMinimized, setIsMinimized] = useState(true);
   const [messages, setMessages] = useState<FisCalMessage[]>(defaultMessages);
@@ -66,7 +68,12 @@ export const FisCal: React.FC = () => {
               <span>FisCal</span>
               <span className="fiscal-status">En línea</span>
             </div>
-            <button className="fiscal-minimize" onClick={() => setIsMinimized(!isMinimized)}>
+            <button
+              className="fiscal-minimize"
+              onClick={() => setIsMinimized(!isMinimized)}
+              type="button"
+              aria-label="Minimizar ventana"
+            >
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d={isMinimized ? "M12 19V5M5 12l7-7 7 7" : "M5 12h14"} />
               </svg>
@@ -92,9 +99,9 @@ export const FisCal: React.FC = () => {
                   placeholder="Pregunta a FisCal..."
                   value={inputMessage}
                   onChange={(e) => setInputMessage(e.target.value)}
-                  onKeyPress={(e) => e.key === 'Enter' && handleSend()}
+                  onKeyDown={(e) => e.key === 'Enter' && handleSend()}
                 />
-                <button onClick={handleSend} disabled={!inputMessage.trim()}>
+                <button onClick={handleSend} disabled={!inputMessage.trim()} type="button" aria-label="Enviar mensaje">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" />
                   </svg>
@@ -108,6 +115,8 @@ export const FisCal: React.FC = () => {
       <button 
         className={`fiscal-trigger ${isOpen ? 'hidden' : ''}`}
         onClick={() => setIsOpen(true)}
+        type="button"
+        aria-label="Abrir asistente FisCal"
       >
         <div className="trigger-icon">
           {getIcon()}
@@ -116,7 +125,12 @@ export const FisCal: React.FC = () => {
       </button>
       
       {!isOpen && (
-        <button className="fiscal-close-btn" onClick={() => setIsOpen(true)}>
+        <button
+          className="fiscal-close-btn"
+          onClick={() => setIsOpen(true)}
+          type="button"
+          aria-label="Abrir asistente FisCal"
+        >
           {getIcon()}
         </button>
       )}

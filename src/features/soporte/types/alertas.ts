@@ -1,0 +1,1 @@
+﻿export interface AlertaDto { alertaId: string; titulo: string; mensaje: string; prioridad: number; fechaEmision: string; fechaLectura?: string; fechaProgramada?: string; tipoAlerta: number; leida: boolean; }

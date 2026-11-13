@@ -1,19 +1,35 @@
 /* ============================================
    COMPONENTE: Sidebar
    Descripción: Navegación lateral de la aplicación
+   FiscalHost Inteligente CR
    ============================================ */
 
-import React, { useState } from 'react';
+import { useState } from 'react';
+import type { FC, ReactNode } from 'react';
 import { NavLink } from 'react-router-dom';
-import { LayoutDashboard, DollarSign, Calculator, Bell, FileText, Settings, ChevronRight, ChevronLeft, FlaskConical, BookOpen, Receipt, AlertOctagon, TrendingDown } from 'lucide-react';
+import {
+  LayoutDashboard,
+  DollarSign,
+  Calculator,
+  Bell,
+  FileText,
+  Settings,
+  ChevronRight,
+  ChevronLeft,
+  FlaskConical,
+  BookOpen,
+  Receipt,
+  AlertOctagon,
+  TrendingDown,
+} from 'lucide-react';
 import './Sidebar.css';
 
 interface MenuItem {
   id: string;
   label: string;
-  icon: React.ReactNode;
+  icon: ReactNode;
   path: string;
- badge?: number;
+  badge?: number;
 }
 
 interface SidebarProps {
@@ -35,8 +51,28 @@ const menuItems: MenuItem[] = [
   { id: 'configuracion', label: 'Configuración', icon: <Settings size={20} />, path: '/configuracion' },
 ];
 
-export const Sidebar: React.FC<SidebarProps> = ({ isOpen = true, onClose }) => {
+export const Sidebar: FC<SidebarProps> = ({ isOpen = true, onClose }) => {
   const [collapsed, setCollapsed] = useState(false);
+
+  let usuario: any = null;
+  try {
+    usuario = JSON.parse(localStorage.getItem('usuario') || 'null');
+  } catch {
+    usuario = null;
+  }
+
+  const getInitials = (name?: string): string => {
+    if (!name) return 'UF';
+    const parts = name.trim().split(/\s+/);
+    if (parts.length >= 2) {
+      return (parts[0][0] + parts[1][0]).toUpperCase();
+    }
+    return name.substring(0, 2).toUpperCase();
+  };
+
+  const displayName = usuario?.nombreCompleto || usuario?.nombre || 'Usuario Fiscal';
+  const displayEmail = usuario?.correoElectronico || usuario?.correo || 'usuario@fiscalhost.cr';
+  const initials = getInitials(displayName);
 
   return (
     <>
@@ -53,7 +89,12 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen = true, onClose }) => {
             </div>
             {!collapsed && <span className="sidebar-logo-text">FiscalHost</span>}
           </div>
-          <button className="sidebar-toggle" onClick={() => setCollapsed(!collapsed)}>
+          <button
+            className="sidebar-toggle"
+            onClick={() => setCollapsed(!collapsed)}
+            type="button"
+            aria-label={collapsed ? 'Expandir barra lateral' : 'Colapsar barra lateral'}
+          >
             {collapsed ? <ChevronRight size={18} /> : <ChevronLeft size={18} />}
           </button>
         </div>
@@ -66,6 +107,11 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen = true, onClose }) => {
               className={({ isActive }) =>
                 `sidebar-link ${isActive ? 'sidebar-link-active' : ''}`
               }
+              onClick={() => {
+                if (window.innerWidth < 768 && onClose) {
+                  onClose();
+                }
+              }}
             >
               <span className="sidebar-link-icon">{item.icon}</span>
               {!collapsed && (
@@ -84,11 +130,11 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen = true, onClose }) => {
           {!collapsed && (
             <div className="sidebar-user">
               <div className="sidebar-user-avatar">
-                <span>LF</span>
+                <span>{initials}</span>
               </div>
               <div className="sidebar-user-info">
-                <span className="sidebar-user-name">Lisbeth Fallas</span>
-                <span className="sidebar-user-email">lisbeth@email.com</span>
+                <span className="sidebar-user-name" title={displayName}>{displayName}</span>
+                <span className="sidebar-user-email" title={displayEmail}>{displayEmail}</span>
               </div>
             </div>
           )}

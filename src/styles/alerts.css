@@ -1,0 +1,144 @@
+/* ============================================
+   SWEETALERT2 — SERENE TAX THEME
+   FiscalHost Inteligente CR
+   ============================================ */
+
+:root {
+  --swal-fiscal-primary: #007A5E;
+  --swal-fiscal-primary-hover: #00634c;
+  --swal-fiscal-accent: #c9a87c;
+}
+
+/* Modal Container & Popup */
+.serene-swal-popup {
+  font-family: var(--font-family-base, 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif) !important;
+  border-radius: var(--radius-lg, 12px) !important;
+  background-color: var(--color-surface, #ffffff) !important;
+  color: var(--color-text-primary, #1a1f2e) !important;
+  border: 1px solid var(--color-border, #e0e2e6) !important;
+  box-shadow: var(--shadow-xl, 0 20px 25px rgba(26, 31, 46, 0.12)) !important;
+  padding: 24px !important;
+}
+
+/* Header & Title */
+.serene-swal-title {
+  font-family: var(--font-family-heading, 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif) !important;
+  font-weight: 600 !important;
+  font-size: 1.25rem !important;
+  color: var(--color-text-primary, #1a1f2e) !important;
+  margin-bottom: 8px !important;
+  padding: 0 !important;
+}
+
+/* Body / HTML Content */
+.serene-swal-html {
+  font-size: 0.875rem !important;
+  color: var(--color-text-secondary, #5a6270) !important;
+  line-height: 1.55 !important;
+  white-space: pre-line !important;
+  margin: 12px 0 !important;
+}
+
+/* Action Buttons */
+.serene-swal-confirm {
+  background-color: var(--swal-fiscal-primary, #007A5E) !important;
+  color: var(--color-text-inverse, #ffffff) !important;
+  border: none !important;
+  border-radius: var(--radius-md, 8px) !important;
+  padding: 10px 20px !important;
+  font-weight: 500 !important;
+  font-size: 0.875rem !important;
+  cursor: pointer !important;
+  transition: background-color 0.2s ease, transform 0.1s ease !important;
+  margin: 6px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-shadow: 0 2px 4px rgba(0, 122, 94, 0.2) !important;
+}
+
+.serene-swal-confirm:hover {
+  background-color: var(--swal-fiscal-primary-hover, #00634c) !important;
+  box-shadow: 0 4px 8px rgba(0, 122, 94, 0.3) !important;
+}
+
+.serene-swal-cancel {
+  background-color: transparent !important;
+  color: var(--color-text-secondary, #5a6270) !important;
+  border: 1px solid var(--color-border, #e0e2e6) !important;
+  border-radius: var(--radius-md, 8px) !important;
+  padding: 10px 20px !important;
+  font-weight: 500 !important;
+  font-size: 0.875rem !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  margin: 6px !important;
+}
+
+.serene-swal-cancel:hover {
+  background-color: var(--color-surface-hover, #f5f3f0) !important;
+  border-color: var(--color-border-dark, #c0c4ca) !important;
+  color: var(--color-text-primary, #1a1f2e) !important;
+}
+
+.serene-swal-deny {
+  background-color: var(--color-danger, #c97070) !important;
+  color: #ffffff !important;
+  border: none !important;
+  border-radius: var(--radius-md, 8px) !important;
+  padding: 10px 20px !important;
+  font-weight: 500 !important;
+  font-size: 0.875rem !important;
+  cursor: pointer !important;
+  margin: 6px !important;
+}
+
+/* Toast Notifications */
+.serene-toast-popup {
+  font-family: var(--font-family-base, 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif) !important;
+  background-color: var(--color-surface, #ffffff) !important;
+  border: 1px solid var(--color-border, #e0e2e6) !important;
+  border-radius: var(--radius-md, 8px) !important;
+  box-shadow: var(--shadow-lg, 0 10px 15px rgba(26, 31, 46, 0.1)) !important;
+  padding: 12px 18px !important;
+}
+
+.serene-toast-title {
+  font-size: 0.875rem !important;
+  font-weight: 500 !important;
+  color: var(--color-text-primary, #1a1f2e) !important;
+  margin: 0 !important;
+}
+
+/* Icon Palette Calibration */
+.swal2-icon.swal2-success {
+  border-color: var(--swal-fiscal-primary, #007A5E) !important;
+  color: var(--swal-fiscal-primary, #007A5E) !important;
+}
+
+.swal2-icon.swal2-success [class^='swal2-success-line'] {
+  background-color: var(--swal-fiscal-primary, #007A5E) !important;
+}
+
+.swal2-icon.swal2-success .swal2-success-ring {
+  border-color: rgba(0, 122, 94, 0.3) !important;
+}
+
+.swal2-icon.swal2-warning {
+  border-color: var(--color-warning, #d4a853) !important;
+  color: var(--color-warning, #d4a853) !important;
+}
+
+.swal2-icon.swal2-error {
+  border-color: var(--color-danger, #c97070) !important;
+  color: var(--color-danger, #c97070) !important;
+}
+
+.swal2-icon.swal2-error [class^='swal2-x-mark-line'] {
+  background-color: var(--color-danger, #c97070) !important;
+}
+
+.swal2-icon.swal2-info {
+  border-color: var(--color-info, #6b8fa3) !important;
+  color: var(--color-info, #6b8fa3) !important;
+}

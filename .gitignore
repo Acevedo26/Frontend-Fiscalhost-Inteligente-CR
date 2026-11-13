@@ -27,3 +27,5 @@ dist-ssr
 *.esproj
 *.esproj.user
 obj/
+.atl/
+.agents/ 

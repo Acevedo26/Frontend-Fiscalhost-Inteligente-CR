@@ -1,25 +1,31 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Layout } from './components/layout';
-import { Login } from './pages/Login';
-import { Registro } from './pages/Registro';
-import { Dashboard } from './pages/Dashboard';
-import { Ingresos } from './pages/Ingresos';
-import { Impuestos } from './pages/Impuestos';
-import { Alertas } from './pages/Alertas';
-import { Reportes } from './pages/Reportes';
-import { Simulador } from './pages/Simulador';
-import { Help } from './pages/Help';
-import { Configuracion } from './pages/Configuracion';
-import { Comprobantes } from './pages/Comprobantes';
-import { Autoliquidacion } from './pages/Autoliquidacion';
-import { Mora } from './pages/Mora';
+import { Login } from './features/auth/pages/Login';
+import { Registro } from './features/auth/pages/Registro';
+import { Dashboard } from './features/dashboard/pages/Dashboard';
+import { Ingresos } from './features/finanzas/pages/Ingresos';
+import { Impuestos } from './features/obligaciones/pages/Impuestos';
+import { Alertas } from './features/soporte/pages/Alertas';
+import { Reportes } from './features/documentos/pages/Reportes';
+import { Simulador } from './features/simulador/pages/Simulador';
+import { Help } from './features/soporte/pages/Help';
+import { Configuracion } from './features/configuracion/pages/Configuracion';
+import { Comprobantes } from './features/documentos/pages/Comprobantes';
+import { Autoliquidacion } from './features/obligaciones/pages/Autoliquidacion';
+import { Mora } from './features/finanzas/pages/Mora';
 import './styles/reset.css';
 import './styles/variables.css';
 import './styles/global.css';
+import './styles/alerts.css';
+
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+const queryClient = new QueryClient();
 
 function App() {
   return (
-    <BrowserRouter>
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Registro />} />
@@ -39,6 +45,7 @@ function App() {
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
+    </QueryClientProvider>
   );
 }
 
