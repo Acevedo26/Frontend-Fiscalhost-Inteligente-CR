@@ -119,11 +119,8 @@ export const FinanzasService = {
   importarCsv: async (file: File): Promise<ImportacionCsvResponse> => {
     const formData = new FormData();
     formData.append('archivo', file);
-    const res = await apiClient.post<ImportacionCsvResponse>('/importaciones/csv', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
+    // NO establecer Content-Type manualmente: axios lo hace automáticamente con el boundary correcto
+    const res = await apiClient.post<ImportacionCsvResponse>('/importaciones/csv', formData);
     return res.data;
   },
 
