@@ -17,7 +17,6 @@ export interface ActualizarGastoDto {
   justificacion: string;
   proveedor: string;
   montoTotal: number;
-  montoIvaSoportado?: number;
   fechaEmision: string;
   tipoGasto?: string;
 }
@@ -43,18 +42,30 @@ export const FinanzasService = {
   },
 
   crearOperacion: async (data: CrearOperacionDto) => {
-    const res = await apiClient.post('/operaciones', {
-      tipo: data.tipo,
-      fecha: data.fecha.includes('T') ? data.fecha : `${data.fecha}T00:00:00Z`,
-      monto: Number(data.monto),
-      concepto: data.concepto,
-      fuente: data.fuente,
-      proveedor: data.proveedor,
-      huesped: data.huesped || (data.tipo === 'INGRESO' ? data.concepto : undefined),
-      numeroFactura: data.numeroFactura,
-      clasificacion: data.clasificacion,
-    });
-    return res.data;
+    if (data.tipo === 'INGRESO') {
+      // Use the manuales/reserva endpoint for reservations (BUG-001 fix)
+      const res = await apiClient.post('/operaciones-manuales/reserva', {
+        fechaReserva: data.fecha.includes('T') ? data.fecha : `${data.fecha}T00:00:00Z`,
+        monto: Number(data.monto),
+        huesped: data.huesped || data.concepto,
+      });
+      return res.data;
+    } else {
+      // Use the manuales/gasto endpoint for expenses
+      // Backend will calculate IVA (13%) and net amount automatically
+      const res = await apiClient.post('/operaciones-manuales/gasto', {
+        justificacion: data.concepto,
+        proveedor: data.proveedor || 'Proveedor General',
+        numeroFactura: data.numeroFactura || `FAC-${Date.now()}`,
+        fechaEmision: data.fecha.includes('T') ? data.fecha : `${data.fecha}T00:00:00Z`,
+        montoTotal: Number(data.monto),
+        moneda: 1, // TipoMoneda.CRC
+        tipoGasto: 'General',
+        esDeducibleRenta: true,
+        esCreditoFiscalValido: true,
+      });
+      return res.data;
+    }
   },
 
   actualizarGasto: async (id: string | number, data: ActualizarGastoDto) => {
@@ -64,8 +75,6 @@ export const FinanzasService = {
       numeroFactura: `FAC-${id}`,
       fechaEmision: data.fechaEmision,
       montoTotal: Number(data.montoTotal),
-      montoIvaSoportado: Number(data.montoIvaSoportado ?? Math.round(Number(data.montoTotal) - (Number(data.montoTotal) / 1.13))),
-      montoNeto: Math.round(Number(data.montoTotal) / 1.13),
       moneda: 1, // TipoMoneda.CRC
       tipoGasto: data.tipoGasto || 'General',
       esDeducibleRenta: true,
