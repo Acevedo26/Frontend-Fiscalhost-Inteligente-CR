@@ -117,8 +117,7 @@ export const FinanzasService = {
     if (clasificacion === 'EXENTO' || clasificacion.toLowerCase().includes('exento')) {
       clasificacionIva = 2;
     }
-    const intId = typeof id === 'number' ? id : parseInt(String(id), 10) || 1;
-    const res = await apiClient.put(`/clasificacion-ingresos/${intId}/reclasificar`, {
+    const res = await apiClient.put(`/clasificacion-ingresos/${id}/reclasificar`, {
       clasificacionIva,
       justificacion,
     });
