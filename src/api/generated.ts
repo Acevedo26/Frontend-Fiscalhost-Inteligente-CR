@@ -1212,6 +1212,39 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/health": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/borradores/d104": {
         parameters: {
             query?: never;
@@ -2786,11 +2819,8 @@ export interface components {
             contrasenaNueva: string;
         };
         ActualizarPreferenciasNotificacionRequest: {
-            /**
-             * Format: int32
-             * @enum {integer}
-             */
-            canalAlertas: 0 | 1 | 2;
+            /** @enum {string} */
+            canalAlertas: "CORREO" | "PLATAFORMA" | "AMBOS";
         };
         BorradorD104Dto: {
             /** Format: double */
@@ -2841,11 +2871,8 @@ export interface components {
             obligacionId: string;
         };
         CambiarRegimenTributarioRequest: {
-            /**
-             * Format: int32
-             * @enum {integer}
-             */
-            nuevoRegimen: 0 | 1;
+            /** @enum {string} */
+            nuevoRegimen: "CAPITAL_INMOBILIARIO" | "UTILIDADES";
             /** Format: int32 */
             anio: number;
             /** Format: int32 */
@@ -2858,11 +2885,8 @@ export interface components {
             fechaSalida: string;
             /** Format: double */
             montoBruto: number;
-            /**
-             * Format: int32
-             * @enum {integer}
-             */
-            fuenteIngreso: 1 | 2;
+            /** @enum {string} */
+            fuenteIngreso: "Nacional" | "Extranjera";
             tieneFacturaElectronicaNacional?: boolean;
             huespedResidente?: boolean;
         };
@@ -2898,23 +2922,14 @@ export interface components {
             paisOrigenHuesped?: string | null;
             /** Format: double */
             montoBruto: number;
-            /**
-             * Format: int32
-             * @enum {integer}
-             */
-            moneda: 0 | 1;
+            /** @enum {string} */
+            moneda: "CRC" | "USD";
             /** Format: double */
             tipoCambio: number;
-            /**
-             * Format: int32
-             * @enum {integer}
-             */
-            clasificacionFiscal: 0 | 1 | 2;
-            /**
-             * Format: int32
-             * @enum {integer}
-             */
-            plataformaOrigen: 0 | 1 | 2 | 3 | 4;
+            /** @enum {string} */
+            clasificacionFiscal: "GRAVADO" | "EXENTO" | "GRAVADO_CON_RETENCION";
+            /** @enum {string} */
+            plataformaOrigen: "AIRBNB" | "BOOKING" | "VRBO" | "DIRECTA" | "OTRA";
             referenciaPlataforma?: string | null;
             /** Format: int32 */
             periodoFiscalAnio: number;
@@ -3010,11 +3025,8 @@ export interface components {
             montoIvaSoportado?: number | null;
             /** Format: double */
             montoNeto?: number | null;
-            /**
-             * Format: int32
-             * @enum {integer}
-             */
-            moneda: 0 | 1;
+            /** @enum {string} */
+            moneda: "CRC" | "USD";
             tipoGasto: string;
             esDeducibleRenta: boolean;
             esCreditoFiscalValido: boolean;
@@ -3066,26 +3078,17 @@ export interface components {
             fechaFija?: string | null;
         };
         ReclasificacionIngresoRequest: {
-            /**
-             * Format: int32
-             * @enum {integer}
-             */
-            clasificacionIva: 1 | 2;
+            /** @enum {string} */
+            clasificacionIva: "Gravado13" | "Exento";
             justificacion: string;
         };
         RegistrarAuditoriaRequest: {
             /** Format: email */
             correoUsuario?: string | null;
-            /**
-             * Format: int32
-             * @enum {integer|null}
-             */
-            rolUsuario?: 0 | 1 | 2 | null;
-            /**
-             * Format: int32
-             * @enum {integer}
-             */
-            operacion: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
+            /** @enum {string|null} */
+            rolUsuario?: "ANFITRION" | "CONTADOR" | "ADMINISTRADOR" | null;
+            /** @enum {string} */
+            operacion: "INSERT" | "UPDATE" | "DELETE" | "LOGIN" | "LOGOUT" | "EXPORT" | "RECLASIFICACION" | "CAMBIO_REGIMEN" | "CAMBIO_ACTIVIDAD_ECONOMICA";
             tablaAfectada: string;
             /** Format: uuid */
             registroId?: string | null;
@@ -3157,11 +3160,8 @@ export interface components {
             montoIvaSoportado?: number | null;
             /** Format: double */
             montoNeto?: number | null;
-            /**
-             * Format: int32
-             * @enum {integer}
-             */
-            moneda: 0 | 1;
+            /** @enum {string} */
+            moneda: "CRC" | "USD";
             tipoGasto: string;
             esDeducibleRenta: boolean;
             descripcion?: string | null;

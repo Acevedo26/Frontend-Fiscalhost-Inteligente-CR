@@ -12,10 +12,9 @@ export const ImpuestosService = {
     const res = await apiClient.post('/renta-capital/simular', { anio, mes });
     return res.data;
   },
-  cambiarRegimen: async (nuevoRegimen: string, anio: number = 2026, mes: number = 4) => {
-    const regimen = nuevoRegimen === 'CAPITAL' ? 'CAPITAL_INMOBILIARIO' : nuevoRegimen;
+  cambiarRegimen: async (nuevoRegimen: "CAPITAL_INMOBILIARIO" | "UTILIDADES", anio: number, mes: number) => {
     const res = await apiClient.post('/renta-capital/cambiar-regimen', {
-      nuevoRegimen: regimen,
+      nuevoRegimen,
       anio,
       mes,
     });

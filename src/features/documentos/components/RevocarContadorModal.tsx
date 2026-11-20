@@ -36,7 +36,7 @@ export const RevocarContadorModal: React.FC<RevocarContadorModalProps> = ({
     if (!confirm.isConfirmed) return;
 
     try {
-      await ReportesService.revocarContador(contador.id.toString());
+      await ReportesService.revocarContador(contador.id.toString(), 'Revocación de acceso de contador solicitada por el propietario.');
     } catch {
       // Handled by global interceptor
     }

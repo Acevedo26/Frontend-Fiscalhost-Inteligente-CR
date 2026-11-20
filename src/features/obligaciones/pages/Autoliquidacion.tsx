@@ -11,7 +11,7 @@ import { Input } from '../../../components/common/Input';
 import { AlertTriangle, Info, FileText, TrendingDown } from 'lucide-react';
 import './Autoliquidacion.css';
 import { useCalcularSancion } from '../hooks/useSancion';
-import { showSuccess, showError, showWarning } from '../../../utils/alerts';
+import { showSuccess, showWarning, showInfo } from '../../../utils/alerts';
 
 
 type TipoSancion = 'omision' | 'inscripcion';
@@ -78,13 +78,9 @@ export const  Autoliquidacion: React.FC = () => {
       }
     }
 
-    const dummyGuid = '00000000-0000-0000-0000-000000000000';
-    calcularSancionMutation.mutate(dummyGuid, {
-      onSuccess: (data) =>
-        showSuccess('Cálculo Oficial', `Cálculo de backend generado exitosamente: ${JSON.stringify(data)}`),
-      onError: () =>
-        showError('Error en Backend', 'No se encontró la obligación pendiente simulada.')
-    });
+    // No hay un ID de obligación real en este flujo; no se envía un GUID inventado al backend.
+    // El cálculo local ya se muestra arriba. El cálculo oficial requiere una obligación registrada.
+    showInfo('Cálculo local', 'El monto mostrado es una estimación local. Para el cálculo oficial del backend, seleccione una obligación registrada.');
   };
 
   const handleGenerarD176 = () => {

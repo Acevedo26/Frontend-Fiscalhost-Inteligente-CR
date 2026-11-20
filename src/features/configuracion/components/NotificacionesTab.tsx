@@ -19,10 +19,10 @@ export const NotificacionesTab: React.FC = () => {
       return;
     }
 
-    let canal: 'CORREO' | 'PLATAFORMA' | 'AMBOS' = 'AMBOS';
-    if (notifEmail && !notifApp) canal = 'CORREO';
-    else if (!notifEmail && notifApp) canal = 'PLATAFORMA';
-    else canal = 'AMBOS';
+    // Mapeo al enum del backend: "CORREO" | "PLATAFORMA" | "AMBOS".
+    let canal: "CORREO" | "PLATAFORMA" | "AMBOS" = "AMBOS";
+    if (notifEmail && !notifApp) canal = "CORREO";
+    else if (!notifEmail && notifApp) canal = "PLATAFORMA";
 
     setIsSaving(true);
     try {

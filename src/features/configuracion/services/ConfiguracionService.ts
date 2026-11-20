@@ -17,7 +17,7 @@ export const ConfiguracionService = {
     const res = await apiClient.post('/configuracion-tributaria', data);
     return res.data;
   },
-  guardarPreferenciasNotificacion: async (canalAlertas: 'CORREO' | 'PLATAFORMA' | 'AMBOS') => {
+  guardarPreferenciasNotificacion: async (canalAlertas: "CORREO" | "PLATAFORMA" | "AMBOS") => {
     const res = await apiClient.put('/usuarios/me/preferencias-notificacion', { canalAlertas });
     return res.data;
   }
