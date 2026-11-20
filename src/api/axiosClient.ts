@@ -9,8 +9,15 @@ declare module 'axios' {
   }
 }
 
-// Get base URL from env or fallback to localhost
-export const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5062/api';
+// Get base URL from env. No localhost fallback in production: fail fast with a clear error
+// if VITE_API_URL is not defined, instead of silently pointing to localhost.
+const VITE_API_URL = import.meta.env.VITE_API_URL;
+if (!VITE_API_URL) {
+  throw new Error(
+    'VITE_API_URL no está definida. Configure .env con la URL base del backend FiscalHost para producción.',
+  );
+}
+export const API_BASE_URL = VITE_API_URL;
 
 export const apiClient = axios.create({
   baseURL: API_BASE_URL,
