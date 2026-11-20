@@ -25,18 +25,22 @@ export const NotificacionesTab: React.FC = () => {
     else if (!notifEmail && notifApp) canal = "PLATAFORMA";
 
     setIsSaving(true);
+    let saveOk = false;
     try {
       await ConfiguracionService.guardarPreferenciasNotificacion(canal);
+      saveOk = true;
     } catch {
       // Handled by global Axios interceptor
     } finally {
       setIsSaving(false);
     }
 
-    showSuccess(
-      'Preferencias Guardadas',
-      'Tus preferencias de notificación fueron guardadas exitosamente en el servidor.'
-    );
+    if (saveOk) {
+      showSuccess(
+        'Preferencias Guardadas',
+        'Tus preferencias de notificación fueron guardadas exitosamente en el servidor.'
+      );
+    }
   };
 
   return (

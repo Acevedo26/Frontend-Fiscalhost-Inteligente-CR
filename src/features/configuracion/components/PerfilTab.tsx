@@ -83,22 +83,26 @@ export const PerfilTab: React.FC<PerfilTabProps> = ({ configuracionData, ACTIVID
     }
 
     setIsSaving(true);
+    let saveOk = false;
     try {
       await ConfiguracionService.guardarConfiguracion({
         codigoActividad: actividadSeleccionada.value,
         direccionFiscal: 'San José, Costa Rica',
         nise: nise.trim(),
       });
+      saveOk = true;
     } catch {
-      // Global error handler
+      // Global Axios interceptor already shows an error alert to the user.
     } finally {
       setIsSaving(false);
     }
 
-    showSuccess(
-      'Perfil Actualizado',
-      'Los datos del perfil tributario y fiscal fueron actualizados correctamente.'
-    );
+    if (saveOk) {
+      showSuccess(
+        'Perfil Actualizado',
+        'Los datos del perfil tributario y fiscal fueron actualizados correctamente.'
+      );
+    }
   };
 
   return (

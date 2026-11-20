@@ -48,7 +48,7 @@ export const InvitarContadorModal: React.FC<InvitarContadorModalProps> = ({
       return;
     }
 
-    setIsSubmitting(true);
+    let inviteOk = false;
     try {
       await ReportesService.invitarContador({
         correoContador: invEmail,
@@ -57,31 +57,34 @@ export const InvitarContadorModal: React.FC<InvitarContadorModalProps> = ({
         puedeGenerarReportes: invPermiso === 'Acceso Total' || invPermiso === 'Lectura + Exportación',
         fechaExpiracion: invExpiracion ? new Date(invExpiracion).toISOString() : null,
       });
+      inviteOk = true;
     } catch {
       // Global error handler
     } finally {
       setIsSubmitting(false);
     }
 
-    const nuevo: Contador = {
-      id: Date.now(),
-      nombre: invEmail.split('@')[0],
-      email: invEmail,
-      permisos: invPermiso,
-      expiracion: invExpiracion || '2026-12-31',
-      estado: 'PENDIENTE',
-    };
-    onInvitar(nuevo);
-    setInvSuccess(true);
-    showSuccess('Invitación Enviada', `Se ha emitido la invitación formal para el contador ${invEmail}.`);
+    if (inviteOk) {
+      const nuevo: Contador = {
+        id: Date.now(),
+        nombre: invEmail.split('@')[0],
+        email: invEmail,
+        permisos: invPermiso,
+        expiracion: invExpiracion || '2026-12-31',
+        estado: 'PENDIENTE',
+      };
+      onInvitar(nuevo);
+      setInvSuccess(true);
+      showSuccess('Invitación Enviada', `Se ha emitido la invitación formal para el contador ${invEmail}.`);
 
-    setTimeout(() => {
-      onClose();
-      setInvEmail('');
-      setInvIdentificacion('');
-      setInvExpiracion('');
-      setInvSuccess(false);
-    }, 1500);
+      setTimeout(() => {
+        onClose();
+        setInvEmail('');
+        setInvIdentificacion('');
+        setInvExpiracion('');
+        setInvSuccess(false);
+      }, 1500);
+    }
   };
 
   const handleClose = () => {

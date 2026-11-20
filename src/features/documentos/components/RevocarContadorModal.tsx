@@ -35,14 +35,18 @@ export const RevocarContadorModal: React.FC<RevocarContadorModalProps> = ({
     );
     if (!confirm.isConfirmed) return;
 
+    let revokeOk = false;
     try {
       await ReportesService.revocarContador(contador.id.toString(), 'Revocación de acceso de contador solicitada por el propietario.');
+      revokeOk = true;
     } catch {
       // Handled by global interceptor
     }
 
-    onRevocar(contador);
-    showSuccess('Acceso Revocado', `Se ha revocado correctamente el acceso al contador ${contador.email}.`);
+    if (revokeOk) {
+      onRevocar(contador);
+      showSuccess('Acceso Revocado', `Se ha revocado correctamente el acceso al contador ${contador.email}.`);
+    }
   };
 
   return (
