@@ -186,9 +186,9 @@ export const Login: FC = () => {
             />
 
             <div className="forgot-password">
-              <a href="#olvidar" onClick={handleForgotPassword} className="forgot-password-link">
+              <button type="button" onClick={handleForgotPassword} className="forgot-password-link">
                 ¿Olvidaste tu contraseña?
-              </a>
+              </button>
             </div>
 
             <Button type="submit" variant="primary" fullWidth loading={loading}>
