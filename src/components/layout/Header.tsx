@@ -91,7 +91,7 @@ export const Header: FC<HeaderProps> = ({ onMenuClick }) => {
   };
 
   const displayName = usuario?.nombreCompleto || usuario?.nombre || 'Contribuyente';
-  const displayEmail = usuario?.correoElectronico || usuario?.correo || 'usuario@fiscalhost.cr';
+  const displayEmail = usuario?.correoElectronico || usuario?.correo || '';
   const initials = getInitials(displayName);
 
   return (

@@ -71,7 +71,7 @@ export const Sidebar: FC<SidebarProps> = ({ isOpen = true, onClose }) => {
   };
 
   const displayName = usuario?.nombreCompleto || usuario?.nombre || 'Usuario Fiscal';
-  const displayEmail = usuario?.correoElectronico || usuario?.correo || 'usuario@fiscalhost.cr';
+  const displayEmail = usuario?.correoElectronico || usuario?.correo || '';
   const initials = getInitials(displayName);
 
   return (

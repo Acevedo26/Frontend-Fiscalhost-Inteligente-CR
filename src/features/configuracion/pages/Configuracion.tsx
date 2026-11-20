@@ -12,19 +12,6 @@ import { NotificacionesTab } from '../components/NotificacionesTab';
 import { SeguridadTab } from '../components/SeguridadTab';
 import { AuditoriaTab } from '../components/AuditoriaTab';
 
-const MOCK_ACTIVIDADES = [
-  { label: '551001 — Alojamiento turístico', value: '551001' },
-  { label: '551002 — Alojamiento en apartamentos', value: '551002' },
-  { label: '552001 — Restaurantes y afines', value: '552001' },
-  { label: '552002 — Servicios de catering', value: '552002' },
-  { label: '681001 — Alquiler de bienes inmuebles', value: '681001' },
-];
-
-const mockLogs = [
-  { id: 1, accion: 'Inicio de sesión', fecha: '19/04/2026 08:30', ip: '192.168.1.100', usuario: 'lisbeth@email.com', campo: null, anterior: null, nuevo: null },
-  { id: 2, accion: 'Modificación de ingreso', fecha: '18/04/2026 14:22', ip: '192.168.1.100', usuario: 'lisbeth@email.com', campo: 'monto', anterior: '45000', nuevo: '48000' },
-];
-
 const USER_ROLE: 'admin' | 'viewer' = 'admin';
 
 export const Configuracion: React.FC = () => {
@@ -37,8 +24,8 @@ export const Configuracion: React.FC = () => {
   const { data: logsData } = useAuditoriaLogs(activeSection === 'auditoria');
   const { data: actividadesData } = useActividades(isPerfilActivo);
 
-  const ACTIVIDADES = actividadesData || MOCK_ACTIVIDADES;
-  const logsToDisplay = logsData || mockLogs;
+  const ACTIVIDADES = actividadesData ?? [];
+  const logsToDisplay = logsData ?? [];
 
   const sections = [
     { id: 'perfil', label: 'Perfil Tributario', icon: <User size={18} /> },

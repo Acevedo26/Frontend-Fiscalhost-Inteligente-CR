@@ -24,12 +24,7 @@ export interface Contador {
   permisos: string;
   expiracion: string;
   estado: 'ACTIVO' | 'EXPIRADO' | 'PENDIENTE';
-}
-
-const initialContadores: Contador[] = [
-  { id: 1, nombre: 'Maria Vargas', email: 'maria@contadorescr.com', permisos: 'Solo Lectura', expiracion: '2026-06-15', estado: 'ACTIVO' },
-  { id: 2, nombre: 'Carlos Lopez', email: 'carlos@contabilidad.com', permisos: 'Exportación', expiracion: '2026-05-01', estado: 'EXPIRADO' },
-];
+};
 
 export const getTipoReporteLabel = (tipo: string) => {
   const labels: Record<string, string> = {
@@ -40,7 +35,7 @@ export const getTipoReporteLabel = (tipo: string) => {
 };
 
 export const Reportes: React.FC = () => {
-  const [contadores, setContadores] = useState<Contador[]>(initialContadores);
+  const [contadores, setContadores] = useState<Contador[]>([]);
 
   // HU-015: exportar
   const [showExportModal, setShowExportModal] = useState(false);

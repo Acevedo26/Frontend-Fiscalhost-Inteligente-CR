@@ -33,7 +33,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ userName, hasData = true }
     }
   }
   if (!displayName) {
-    displayName = 'Lisbeth Fallas';
+    displayName = '';
   }
 
   return (
