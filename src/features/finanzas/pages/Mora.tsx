@@ -27,45 +27,6 @@ interface ObligacionDisplay {
   diasVencido: number;
 }
 
-const mockObligaciones: ObligacionDisplay[] = [
-  {
-    id: 1,
-    formulario: 'D-104',
-    periodo: 'Febrero 2026',
-    capital: 85000,
-    fechaVencimiento: '2026-03-15',
-    tasaMensual: 0.018,
-    multa: 0,
-    interesesCalculados: 3060,
-    totalActualizado: 88060,
-    diasVencido: 45,
-  },
-  {
-    id: 2,
-    formulario: 'D-104',
-    periodo: 'Enero 2026',
-    capital: 62000,
-    fechaVencimiento: '2026-02-15',
-    tasaMensual: 0.018,
-    multa: 0,
-    interesesCalculados: 3348,
-    totalActualizado: 65348,
-    diasVencido: 75,
-  },
-  {
-    id: 3,
-    formulario: 'D-125',
-    periodo: '2025',
-    capital: 296138,
-    fechaVencimiento: null,
-    tasaMensual: 0.018,
-    multa: 0,
-    interesesCalculados: 0,
-    totalActualizado: 296138,
-    diasVencido: 0,
-  },
-];
-
 const calcularMesesVencidos = (fechaVenc: string, corte: string): number => {
   const d = new Date(fechaVenc);
   const c = new Date(corte);
@@ -131,7 +92,7 @@ export const Mora: React.FC = () => {
         };
       });
     }
-    return mockObligaciones;
+    return [];
   }, [apiObligaciones]);
 
   const totalDeuda = listaObligaciones
