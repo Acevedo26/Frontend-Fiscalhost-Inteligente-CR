@@ -8,9 +8,10 @@ interface ComprobantesTableProps {
   isLoading: boolean;
   formatCurrency: (amount: number) => string;
   onDelete?: (gasto: any) => void;
+  isDeleting?: boolean;
 }
 
-export const ComprobantesTable: React.FC<ComprobantesTableProps> = ({ comprobantes, isLoading, formatCurrency, onDelete }) => {
+export const ComprobantesTable: React.FC<ComprobantesTableProps> = ({ comprobantes, isLoading, formatCurrency, onDelete, isDeleting = false }) => {
   return (
     <Card variant="outlined" padding="none">
       <div className="table-container">
@@ -58,6 +59,7 @@ export const ComprobantesTable: React.FC<ComprobantesTableProps> = ({ comprobant
                     className="action-btn action-btn-danger"
                     title="Eliminar"
                     onClick={() => onDelete?.(c)}
+                    disabled={isDeleting}
                   >
                     <X size={16} />
                   </button>

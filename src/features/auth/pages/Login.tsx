@@ -78,12 +78,9 @@ export const Login: FC = () => {
 
       if (data && data.token) {
         localStorage.setItem('token', data.token);
-
-        const usuarioObj = data.usuario || {
-          correoElectronico: trimmedEmail,
-          nombreCompleto: trimmedEmail.split('@')[0],
-        };
-        localStorage.setItem('usuario', JSON.stringify(usuarioObj));
+        if (data.usuario) {
+          localStorage.setItem('usuario', JSON.stringify(data.usuario));
+        }
 
         showToast('¡Inicio de sesión exitoso!', 'success');
         navigate('/');
@@ -189,9 +186,9 @@ export const Login: FC = () => {
             />
 
             <div className="forgot-password">
-              <a href="#olvidar" onClick={handleForgotPassword} className="forgot-password-link">
+              <button type="button" onClick={handleForgotPassword} className="forgot-password-link">
                 ¿Olvidaste tu contraseña?
-              </a>
+              </button>
             </div>
 
             <Button type="submit" variant="primary" fullWidth loading={loading}>

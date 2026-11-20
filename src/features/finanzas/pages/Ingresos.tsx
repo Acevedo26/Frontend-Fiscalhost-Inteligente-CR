@@ -63,6 +63,10 @@ export const Ingresos: React.FC = () => {
     omitidos: 0,
   });
   const [selectedPlatform, setSelectedPlatform] = useState('Airbnb');
+  const [isSavingAdd, setIsSavingAdd] = useState(false);
+  const [isSavingEdit, setIsSavingEdit] = useState(false);
+  const [isSavingReclasif, setIsSavingReclasif] = useState(false);
+  const [isDeletingTx, setIsDeletingTx] = useState(false);
 
   const today = useMemo(() => new Date().toISOString().split('T')[0], []);
 
@@ -182,6 +186,7 @@ export const Ingresos: React.FC = () => {
       return;
     }
 
+    setIsSavingAdd(true);
     try {
       await FinanzasService.crearOperacion({
         tipo: activeTab === 'ingresos' ? 'INGRESO' : 'GASTO',
@@ -231,6 +236,8 @@ export const Ingresos: React.FC = () => {
         'Error al Registrar',
         err.response?.data?.mensaje || err.message || 'No fue posible registrar la operación manual.'
       );
+    } finally {
+      setIsSavingAdd(false);
     }
   };
 
@@ -251,6 +258,7 @@ export const Ingresos: React.FC = () => {
       return;
     }
 
+    setIsSavingEdit(true);
     try {
       if (editTx.tipo === 'GASTO') {
         await FinanzasService.actualizarGasto(editTx.id, {
@@ -301,6 +309,8 @@ export const Ingresos: React.FC = () => {
         'Error al Modificar',
         err.response?.data?.mensaje || err.message || 'No fue posible actualizar el registro.'
       );
+    } finally {
+      setIsSavingEdit(false);
     }
   };
 
@@ -320,6 +330,7 @@ export const Ingresos: React.FC = () => {
       return;
     }
 
+    setIsSavingReclasif(true);
     try {
       await FinanzasService.reclasificarIngreso(reclasificarTx.id, nuevaClasif, reclasifJustif.trim());
 
@@ -343,6 +354,8 @@ export const Ingresos: React.FC = () => {
         'Error al Reclasificar',
         err.response?.data?.mensaje || err.message || 'No fue posible guardar la reclasificación fiscal.'
       );
+    } finally {
+      setIsSavingReclasif(false);
     }
   };
 
@@ -361,6 +374,7 @@ export const Ingresos: React.FC = () => {
 
     if (!confirm.isConfirmed) return;
 
+    setIsDeletingTx(true);
     try {
       if (activeTab === 'gastos') {
         await FinanzasService.eliminarGasto(id, 'Eliminación manual solicitada por el contribuyente');
@@ -378,6 +392,8 @@ export const Ingresos: React.FC = () => {
         'Error al Eliminar',
         err.response?.data?.mensaje || err.message || 'No fue posible eliminar la transacción.'
       );
+    } finally {
+      setIsDeletingTx(false);
     }
   };
 
@@ -435,6 +451,9 @@ export const Ingresos: React.FC = () => {
         onEdit={onEdit}
         onDelete={handleDelete}
         onReclassify={onReclassify}
+        isSavingEdit={isSavingEdit}
+        isSavingReclasif={isSavingReclasif}
+        isDeleting={isDeletingTx}
       />
 
       <AddTransactionModal
@@ -449,6 +468,7 @@ export const Ingresos: React.FC = () => {
         addErrors={addErrors}
         setAddErrors={setAddErrors}
         handleSaveAdd={handleSaveAdd}
+        isSaving={isSavingAdd}
         optionsClasificacion={optionsClasificacion}
         optionsFuente={optionsFuente}
         today={today}
@@ -464,6 +484,7 @@ export const Ingresos: React.FC = () => {
         editRazonError={editRazonError}
         setEditRazonError={setEditRazonError}
         handleSaveEdit={handleSaveEdit}
+        isSaving={isSavingEdit}
       />
 
       <ReclassifyModal
@@ -477,6 +498,7 @@ export const Ingresos: React.FC = () => {
         reclasifError={reclasifError}
         setReclasifError={setReclasifError}
         handleSaveReclasif={handleSaveReclasif}
+        isSaving={isSavingReclasif}
       />
 
       <ImportModal

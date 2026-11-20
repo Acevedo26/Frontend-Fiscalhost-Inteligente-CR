@@ -22,6 +22,7 @@ import {
   AlertOctagon,
   TrendingDown,
 } from 'lucide-react';
+import { useAuthContext } from '../../features/auth/context/AuthContext';
 import './Sidebar.css';
 
 interface MenuItem {
@@ -53,13 +54,7 @@ const menuItems: MenuItem[] = [
 
 export const Sidebar: FC<SidebarProps> = ({ isOpen = true, onClose }) => {
   const [collapsed, setCollapsed] = useState(false);
-
-  let usuario: any = null;
-  try {
-    usuario = JSON.parse(localStorage.getItem('usuario') || 'null');
-  } catch {
-    usuario = null;
-  }
+  const { user } = useAuthContext();
 
   const getInitials = (name?: string): string => {
     if (!name) return 'UF';
@@ -71,7 +66,7 @@ export const Sidebar: FC<SidebarProps> = ({ isOpen = true, onClose }) => {
   };
 
   const displayName = usuario?.nombreCompleto || usuario?.nombre || 'Usuario Fiscal';
-  const displayEmail = usuario?.correoElectronico || usuario?.correo || 'usuario@fiscalhost.cr';
+  const displayEmail = usuario?.correoElectronico || usuario?.correo || '';
   const initials = getInitials(displayName);
 
   return (

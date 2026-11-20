@@ -17,10 +17,11 @@ interface ReclassifyModalProps {
   reclasifError: string;
   setReclasifError: (error: string) => void;
   handleSaveReclasif: () => void;
+  isSaving?: boolean;
 }
 
 export const ReclassifyModal: React.FC<ReclassifyModalProps> = ({
-  reclasificarTx, onClose, optionsClasificacion, nuevaClasif, setNuevaClasif, reclasifJustif, setReclasifJustif, reclasifError, setReclasifError, handleSaveReclasif
+  reclasificarTx, onClose, optionsClasificacion, nuevaClasif, setNuevaClasif, reclasifJustif, setReclasifJustif, reclasifError, setReclasifError, handleSaveReclasif, isSaving = false
 }) => {
   const handleSubmit = () => {
     if (!nuevaClasif) {
@@ -62,7 +63,9 @@ export const ReclassifyModal: React.FC<ReclassifyModalProps> = ({
         />
         <div className="modal-actions">
           <Button variant="secondary" onClick={onClose}>Cancelar</Button>
-          <Button variant="primary" onClick={handleSubmit}>Confirmar</Button>
+          <Button variant="primary" onClick={handleSubmit} loading={isSaving}>
+            Confirmar
+          </Button>
         </div>
       </div>
     </Modal>
