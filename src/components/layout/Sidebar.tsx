@@ -65,8 +65,8 @@ export const Sidebar: FC<SidebarProps> = ({ isOpen = true, onClose }) => {
     return name.substring(0, 2).toUpperCase();
   };
 
-  const displayName = usuario?.nombreCompleto || usuario?.nombre || 'Usuario Fiscal';
-  const displayEmail = usuario?.correoElectronico || usuario?.correo || '';
+  const displayName = user?.nombreCompleto || user?.nombre || 'Usuario Fiscal';
+  const displayEmail = user?.correoElectronico || user?.correo || '';
   const initials = getInitials(displayName);
 
   return (

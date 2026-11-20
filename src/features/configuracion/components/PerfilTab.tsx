@@ -8,8 +8,6 @@ import { Modal } from '../../../components/common/Modal';
 import { CheckCircle, AlertTriangle, Info } from 'lucide-react';
 import { showWarning, showSuccess } from '../../../utils/alerts';
 import { ConfiguracionService } from '../services/ConfiguracionService';
-import { useAuthContext } from '../../auth/context/AuthContext';
-
 interface PerfilTabProps {
   configuracionData: any;
   ACTIVIDADES: any[];

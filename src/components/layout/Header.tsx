@@ -86,8 +86,8 @@ export const Header: FC<HeaderProps> = ({ onMenuClick }) => {
     }
   };
 
-  const displayName = usuario?.nombreCompleto || usuario?.nombre || 'Contribuyente';
-  const displayEmail = usuario?.correoElectronico || usuario?.correo || '';
+  const displayName = user?.nombreCompleto || user?.nombre || 'Contribuyente';
+  const displayEmail = user?.correoElectronico || user?.correo || '';
   const initials = getInitials(displayName);
 
   return (
