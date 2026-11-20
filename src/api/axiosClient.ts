@@ -96,7 +96,27 @@ apiClient.interceptors.response.use(
         );
         break;
 
+      case 405:
+      case 406:
+      case 408:
+      case 409:
+      case 410:
+      case 413:
+      case 414:
+      case 415:
+      case 429:
+        showError(
+          'Error de Solicitud',
+          message || 'La solicitud no se pudo completar. Verifique los datos e intente nuevamente.'
+        );
+        break;
+
       case 500:
+      case 501:
+      case 502:
+      case 503:
+      case 504:
+      case 505:
         showError(
           'Error del Servidor',
           message || 'Ocurrió una falla inesperada en el servidor. Intente nuevamente en unos momentos.'
