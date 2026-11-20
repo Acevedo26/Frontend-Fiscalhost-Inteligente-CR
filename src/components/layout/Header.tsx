@@ -8,6 +8,7 @@ import { useState } from 'react';
 import type { FC, KeyboardEvent } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../features/auth/hooks/useAuth';
+import { useAuthContext } from '../../features/auth/context/AuthContext';
 import { showToast, showConfirm } from '../../utils/alerts';
 import './Header.css';
 
@@ -27,12 +28,7 @@ export const Header: FC<HeaderProps> = ({ onMenuClick }) => {
     { id: 2, title: 'IVA Pendiente', message: 'Tienes ₡125,000 por pagar', time: '1d ago' },
   ]);
 
-  let usuario: any = null;
-  try {
-    usuario = JSON.parse(localStorage.getItem('usuario') || 'null');
-  } catch {
-    usuario = null;
-  }
+  const { user } = useAuthContext();
 
   const getInitials = (name?: string): string => {
     if (!name) return 'UF';
@@ -90,8 +86,8 @@ export const Header: FC<HeaderProps> = ({ onMenuClick }) => {
     }
   };
 
-  const displayName = usuario?.nombreCompleto || usuario?.nombre || 'Contribuyente';
-  const displayEmail = usuario?.correoElectronico || usuario?.correo || 'usuario@fiscalhost.cr';
+  const displayName = user?.nombreCompleto || user?.nombre || 'Contribuyente';
+  const displayEmail = user?.correoElectronico || user?.correo || '';
   const initials = getInitials(displayName);
 
   return (
