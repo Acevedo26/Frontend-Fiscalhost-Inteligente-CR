@@ -8,6 +8,7 @@ import { Modal } from '../../../components/common/Modal';
 import { CheckCircle, AlertTriangle, Info } from 'lucide-react';
 import { showWarning, showSuccess } from '../../../utils/alerts';
 import { ConfiguracionService } from '../services/ConfiguracionService';
+import { useAuthContext } from '../../auth/context/AuthContext';
 
 interface PerfilTabProps {
   configuracionData: any;
@@ -15,8 +16,13 @@ interface PerfilTabProps {
 }
 
 export const PerfilTab: React.FC<PerfilTabProps> = ({ configuracionData, ACTIVIDADES }) => {
-  const [nombreCompleto, setNombreCompleto] = useState(configuracionData?.nombreCompleto || 'Lisbeth Fallas');
-  const [email] = useState(configuracionData?.email || 'lisbeth@email.com');
+  const { user } = useAuthContext();
+  const [nombreCompleto, setNombreCompleto] = useState(
+    configuracionData?.nombreCompleto || user?.nombreCompleto || user?.nombre || ''
+  );
+  const [email] = useState(
+    configuracionData?.email || user?.correoElectronico || user?.correo || ''
+  );
   const [tipoIdentificacion, setTipoIdentificacion] = useState(configuracionData?.tipoIdentificacion || 'FISICA');
   const [identificacion, setIdentificacion] = useState(configuracionData?.identificacion || '01-0234-5678');
   const [regimen, setRegimen] = useState<'CAPITAL' | 'UTILIDADES'>(configuracionData?.regimen || 'CAPITAL');
@@ -112,7 +118,7 @@ export const PerfilTab: React.FC<PerfilTabProps> = ({ configuracionData, ACTIVID
               value={nombreCompleto}
               onChange={(e: any) => setNombreCompleto(e.target.value)}
             />
-            <Input label="Email" type="email" value={email} disabled />
+            <Input label="Email" type="email" value={email} />
           </div>
           <div className="form-row">
             <Select

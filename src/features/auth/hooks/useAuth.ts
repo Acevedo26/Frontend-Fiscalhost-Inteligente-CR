@@ -9,7 +9,9 @@ export const useAuth = () => {
     mutationFn: (credentials: LoginRequest) => AuthService.login(credentials),
     onSuccess: (data) => {
       localStorage.setItem('token', data.token);
-      localStorage.setItem('usuario', JSON.stringify(data.usuario));
+      if (data.usuario) {
+        localStorage.setItem('usuario', JSON.stringify(data.usuario));
+      }
       navigate('/');
     },
   });
