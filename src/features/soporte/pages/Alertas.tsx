@@ -12,15 +12,6 @@ import { useAlertas } from '../hooks/useAlertas';
 import type { AlertaDto } from '../types/alertas';
 
 
-const mockCalendario = [
-  { dia: 1, mes: 'May', label: 'IVA', tipo: 'vencimiento' },
-  { dia: 5, mes: 'May', label: 'Pago', tipo: 'recordatorio' },
-  { dia: 15, mes: 'May', label: 'D-104', tipo: 'vencimiento' },
-  { dia: 20, mes: 'May', label: 'D-125', tipo: 'vencimiento' },
-  { dia: 1, mes: 'Jun', label: 'IVA', tipo: 'vencimiento' },
-  { dia: 30, mes: 'Jun', label: 'Renta', tipo: 'vencimiento' },
-];
-
 export const Alertas: React.FC = () => {
   const [filtroPrioridad, setFiltroPrioridad] = useState('TODAS');
 
@@ -66,11 +57,9 @@ export const Alertas: React.FC = () => {
             <div className="calendario-dates">
               {[...Array(30)].map((_, i) => {
                 const dia = i + 1;
-                const evento = mockCalendario.find(c => c.dia === dia);
                 return (
-                  <div key={dia} className={`calendario-date ${evento ? `calendario-date-${evento.tipo}` : ''} ${dia === 15 ? 'active' : ''}`}>
+                  <div key={dia} className={`calendario-date ${dia === 15 ? 'active' : ''}`}>
                     <span>{dia}</span>
-                    {evento && <span className="date-label">{evento.label}</span>}
                   </div>
                 );
               })}

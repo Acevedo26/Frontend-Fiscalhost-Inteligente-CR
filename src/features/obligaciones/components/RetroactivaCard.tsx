@@ -11,12 +11,6 @@ const TARIFAS_HISTORICAS: Record<number, { iva: number; renta: number; nota: str
   2026: { iva: 0.13, renta: 0.1275, nota: 'Tarifa actual' },
 };
 
-const mockHistorial: Record<number, (boolean | null)[]> = {
-  2026: [true, true, true, true, false, null, null, null, null, null, null, null],
-  2025: [true, true, true, true, true, true, true, true, true, true, true, true],
-  2024: [true, true, true, true, true, true, true, true, true, true, true, true],
-};
-
 const MESES = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
 
 export const RetroactivaCard: React.FC = () => {
@@ -48,7 +42,7 @@ export const RetroactivaCard: React.FC = () => {
           ))}
         </div>
         {[anoRetro].map(ano => {
-          const meses = mockHistorial[ano] || Array(12).fill(null);
+          const meses = Array(12).fill(null);
           const incompletos = meses.filter(m => m === false).length;
           return (
             <div key={ano}>
