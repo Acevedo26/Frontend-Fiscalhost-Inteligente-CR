@@ -16,23 +16,18 @@ interface PerfilTabProps {
 }
 
 export const PerfilTab: React.FC<PerfilTabProps> = ({ configuracionData, ACTIVIDADES }) => {
-  const { user } = useAuthContext();
-  const [nombreCompleto, setNombreCompleto] = useState(
-    configuracionData?.nombreCompleto || user?.nombreCompleto || user?.nombre || ''
-  );
-  const [email] = useState(
-    configuracionData?.email || user?.correoElectronico || user?.correo || ''
-  );
+  const [nombreCompleto, setNombreCompleto] = useState(configuracionData?.nombreCompleto || '');
+  const [email] = useState(configuracionData?.email || '');
   const [tipoIdentificacion, setTipoIdentificacion] = useState(configuracionData?.tipoIdentificacion || 'FISICA');
-  const [identificacion, setIdentificacion] = useState(configuracionData?.identificacion || '01-0234-5678');
+  const [identificacion, setIdentificacion] = useState(configuracionData?.identificacion || '');
   const [regimen, setRegimen] = useState<'CAPITAL' | 'UTILIDADES'>(configuracionData?.regimen || 'CAPITAL');
-  const [actividadQuery, setActividadQuery] = useState(configuracionData?.actividadEconomica || '551001 — Alojamiento turístico');
+  const [actividadQuery, setActividadQuery] = useState(configuracionData?.actividadEconomica || '');
   const [actividadSeleccionada, setActividadSeleccionada] = useState(ACTIVIDADES[0]);
   const [showActividadDropdown, setShowActividadDropdown] = useState(false);
   const [actividadError, setActividadError] = useState('');
   const [showCambioActividadModal, setShowCambioActividadModal] = useState(false);
   const [pendingActividad, setPendingActividad] = useState<any>(null);
-  const [nise, setNise] = useState(configuracionData?.nise || '123456789');
+  const [nise, setNise] = useState(configuracionData?.nise || '');
   const [showNiseTooltip, setShowNiseTooltip] = useState(false);
   const [niseValidado, setNiseValidado] = useState(false);
   const [isSaving, setIsSaving] = useState(false);

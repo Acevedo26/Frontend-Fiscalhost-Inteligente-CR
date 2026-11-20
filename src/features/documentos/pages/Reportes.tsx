@@ -16,15 +16,7 @@ export interface Contador {
   permisos: string;
   expiracion: string;
   estado: 'ACTIVO' | 'EXPIRADO' | 'PENDIENTE';
-}
-
-export interface Reporte {
-  id: number;
-  tipo: string;
-  nombre: string;
-  fecha: string;
-  estado: 'LISTO' | 'ENVIADO' | 'PENDIENTE';
-}
+};
 
 export const getTipoReporteLabel = (tipo: string) => {
   const labels: Record<string, string> = {
