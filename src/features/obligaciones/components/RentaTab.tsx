@@ -17,12 +17,13 @@ interface RentaTabProps {
   onAplicarRegimen?: (r: 'CAPITAL' | 'UTILIDADES') => void;
   setShowComparativa: (s: boolean) => void;
   formatCurrency: (n: number) => string;
+  isAplicando?: boolean;
 }
 
 export const RentaTab: React.FC<RentaTabProps> = ({
   ingresosRenta, deduccionCapital, gastosRenta, baseCapital, baseUtilidades,
   impuestoCapital, impuestoUtilidades, regimenRecomendado, regimenActivo,
-  setRegimenActivo, onAplicarRegimen, setShowComparativa, formatCurrency
+  setRegimenActivo, onAplicarRegimen, setShowComparativa, formatCurrency, isAplicando = false
 }) => (
   <>
     <div className="regimen-comparativa">
@@ -52,7 +53,9 @@ export const RentaTab: React.FC<RentaTabProps> = ({
                 } else {
                   setRegimenActivo(r.id as 'CAPITAL' | 'UTILIDADES');
                 }
-              }}>
+              }}
+              disabled={isAplicando || regimenActivo === r.id}
+              loading={isAplicando}>
               {regimenActivo === r.id ? 'Régimen activo' : 'Aplicar régimen'}
             </Button>
           </div>

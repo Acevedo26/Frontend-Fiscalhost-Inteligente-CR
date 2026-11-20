@@ -14,6 +14,7 @@ import type { AlertaDto } from '../types/alertas';
 
 export const Alertas: React.FC = () => {
   const [filtroPrioridad, setFiltroPrioridad] = useState('TODAS');
+  const [mesCalendario, setMesCalendario] = useState({ anio: 2026, mes: 5 });
 
   const { alertas, isLoading, marcarLeida, isMarkingLeida } = useAlertas();
   const prioridades = ['TODAS', 'ALTA', 'MEDIA', 'BAJA'];
@@ -40,11 +41,11 @@ export const Alertas: React.FC = () => {
         <Card variant="outlined" padding="md" className="calendario-card">
           <h3>Calendario Fiscal</h3>
           <div className="calendario-header">
-            <button className="calendario-nav">
+            <button className="calendario-nav" onClick={() => setMesCalendario(p => ({ ...p, mes: p.mes - 1 || 12, anio: p.mes === 1 ? p.anio - 1 : p.anio }))}>
               <ChevronLeft size={18} />
             </button>
-            <span>Mayo 2026</span>
-            <button className="calendario-nav">
+            <span>{new Date(mesCalendario.anio, mesCalendario.mes - 1).toLocaleDateString('es-CR', { month: 'long', year: 'numeric' })}</span>
+            <button className="calendario-nav" onClick={() => setMesCalendario(p => ({ ...p, mes: p.mes + 1 > 12 ? 1 : p.mes + 1, anio: p.mes === 12 ? p.anio + 1 : p.anio }))}>
               <ChevronRight size={18} />
             </button>
           </div>

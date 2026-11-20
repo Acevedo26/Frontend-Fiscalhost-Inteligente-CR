@@ -22,6 +22,7 @@ export const Simulador: React.FC = () => {
   const [escenarios, setEscenarios] = useState<Escenario[]>([]);
   const [nuevoEscenario, setNuevoEscenario] = useState({ nombre: '', ingresos: 350000, gastos: 80000, activo: 0 });
   const [showComparison, setShowComparison] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
 
   const agregarEscenario = async () => {
     if (!nuevoEscenario.nombre || !nuevoEscenario.nombre.trim()) {
@@ -43,6 +44,7 @@ export const Simulador: React.FC = () => {
     }
 
     const newId = Date.now().toString();
+    setIsSaving(true);
     try {
       await SimuladorService.crearSimulacion({
         nombre: nuevoEscenario.nombre.trim(),
@@ -54,6 +56,8 @@ export const Simulador: React.FC = () => {
       });
     } catch {
       // Handled by global Axios interceptor
+    } finally {
+      setIsSaving(false);
     }
 
     setEscenarios([
@@ -84,10 +88,13 @@ export const Simulador: React.FC = () => {
     );
     if (!confirm.isConfirmed) return;
 
+    setIsSaving(true);
     try {
       await SimuladorService.eliminarSimulacion(id);
     } catch {
       // Handled by global Axios interceptor
+    } finally {
+      setIsSaving(false);
     }
 
     setEscenarios(escenarios.filter(e => e.id !== id));
@@ -161,6 +168,7 @@ export const Simulador: React.FC = () => {
               isBase={isBase}
               onUpdate={actualizarEscenario}
               onDelete={eliminarEscenario}
+              isDeleting={isSaving}
             />
           );
         })}
@@ -187,7 +195,7 @@ export const Simulador: React.FC = () => {
             value={nuevoEscenario.gastos.toString()}
             onChange={(e) => setNuevoEscenario({ ...nuevoEscenario, gastos: Number(e.target.value) })}
           />
-          <Button variant="primary" onClick={agregarEscenario}>
+          <Button variant="primary" onClick={agregarEscenario} loading={isSaving}>
             Agregar escenario
           </Button>
         </Card>
