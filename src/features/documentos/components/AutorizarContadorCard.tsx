@@ -9,6 +9,7 @@ interface AutorizarContadorCardProps {
   contadores: Contador[];
   onInvitar: () => void;
   onRevocar: (contador: Contador) => void;
+  isRevoking?: boolean;
 }
 
 const diasHastaExpiracion = (fecha: string) => {
@@ -16,7 +17,7 @@ const diasHastaExpiracion = (fecha: string) => {
   return Math.ceil(diff / (1000 * 60 * 60 * 24));
 };
 
-export const AutorizarContadorCard: React.FC<AutorizarContadorCardProps> = ({ contadores, onInvitar, onRevocar }) => {
+export const AutorizarContadorCard: React.FC<AutorizarContadorCardProps> = ({ contadores, onInvitar, onRevocar, isRevoking = false }) => {
   return (
     <Card variant="outlined" padding="md">
       <div className="card-header">
@@ -45,7 +46,8 @@ export const AutorizarContadorCard: React.FC<AutorizarContadorCardProps> = ({ co
                 </span>
               </div>
               <button className="action-icon action-icon-danger" title="Revocar"
-                onClick={() => onRevocar(c)}>
+                onClick={() => onRevocar(c)}
+                disabled={isRevoking}>
                 <X size={18} />
               </button>
             </div>

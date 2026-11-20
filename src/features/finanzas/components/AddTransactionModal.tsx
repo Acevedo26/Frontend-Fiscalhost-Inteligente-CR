@@ -22,13 +22,14 @@ interface AddTransactionModalProps {
   addErrors: Record<string, string>;
   setAddErrors: React.Dispatch<React.SetStateAction<Record<string, string>>>;
   handleSaveAdd: () => void;
+  isSaving?: boolean;
   optionsClasificacion: { label: string; value: string }[];
   optionsFuente: { label: string; value: string }[];
   today: string;
 }
 
 export const AddTransactionModal: React.FC<AddTransactionModalProps> = ({
-  isOpen, onClose, activeTab, addForm, setAddForm, addErrors, setAddErrors, handleSaveAdd, optionsClasificacion, optionsFuente, today
+  isOpen, onClose, activeTab, addForm, setAddForm, addErrors, setAddErrors, handleSaveAdd, isSaving = false, optionsClasificacion, optionsFuente, today
 }) => {
   const handleSubmit = () => {
     const errors: Record<string, string> = {};
@@ -137,7 +138,9 @@ export const AddTransactionModal: React.FC<AddTransactionModalProps> = ({
         )}
         <div className="modal-actions">
           <Button variant="secondary" onClick={onClose}>Cancelar</Button>
-          <Button variant="primary" onClick={handleSubmit}>Guardar</Button>
+          <Button variant="primary" onClick={handleSubmit} loading={isSaving}>
+            Guardar
+          </Button>
         </div>
       </div>
     </Modal>

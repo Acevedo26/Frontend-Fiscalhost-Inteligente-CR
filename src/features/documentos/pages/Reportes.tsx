@@ -1,21 +1,13 @@
 import React, { useState } from 'react';
 import { Card } from '../../../components/common/Card';
 
-import { Badge } from '../../../components/common/Badge';
-import { Download, ChevronRight, BarChart2, ClipboardList, DollarSign, FileText, Upload } from 'lucide-react';
+import { ChevronRight, BarChart2, ClipboardList, DollarSign, FileText, Upload } from 'lucide-react';
 import { ExportarModal } from '../components/ExportarModal';
 import { InvitarContadorModal } from '../components/InvitarContadorModal';
 import { RevocarContadorModal } from '../components/RevocarContadorModal';
 import { AutorizarContadorCard } from '../components/AutorizarContadorCard';
-import { showSuccess } from '../../../utils/alerts';
-import './Reportes.css';
 
-const mockReportes = [
-  { id: 1, tipo: 'RESUMEN_MENSUAL', nombre: 'Resumen Abril 2026', fecha: '18/04/2026', estado: 'LISTO' },
-  { id: 2, tipo: 'DECLARACION_IVA', nombre: 'Declaración IVA - Marzo 2026', fecha: '15/04/2026', estado: 'ENVIADO' },
-  { id: 3, tipo: 'DECLARACION_RENTA', nombre: 'Declaración Renta 2025', fecha: '01/03/2026', estado: 'ENVIADO' },
-  { id: 4, tipo: 'DETALLE_GASTOS', nombre: 'Detalle Gastos 2026', fecha: '20/02/2026', estado: 'LISTO' },
-];
+import './Reportes.css';
 
 export interface Contador {
   id: number;
@@ -47,36 +39,6 @@ export const Reportes: React.FC = () => {
   // HU-016: revocar
   const [revocarContador, setRevocarContador] = useState<Contador | null>(null);
 
-  const handleDescargarReporte = (reporte: (typeof mockReportes)[0]) => {
-    const content = [
-      `============================================================`,
-      `REPORTE TRIBUTARIO: ${reporte.nombre}`,
-      `Fecha de generacion: ${reporte.fecha}`,
-      `Tipo: ${getTipoReporteLabel(reporte.tipo)}`,
-      `Estado: ${reporte.estado}`,
-      `============================================================`,
-      `Generado conforme a las regulaciones tributarias de Costa Rica.`,
-      `Sistema: FiscalHost Inteligente CR`,
-      `============================================================`,
-    ].join('\n');
-
-    const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `${reporte.nombre.replace(/\s+/g, '_')}.txt`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-
-    showSuccess(
-      'Reporte Descargado',
-      `El reporte "${reporte.nombre}" ha sido generado y descargado exitosamente.`
-    );
-  };
-
-
   const handleInvitar = (nuevo: Contador) => {
     setContadores([...contadores, nuevo]);
   };
@@ -106,7 +68,7 @@ export const Reportes: React.FC = () => {
               { tipo: 'DETALLE_GASTOS', icono: <FileText size={22} />, desc: 'Listado detallado de gastos' },
               { tipo: 'EXPORTACION_ATV', icono: <Upload size={22} />, desc: 'Exportación en formato ATV' },
             ].map(r => (
-              <div key={r.tipo} className="report-type-card"
+              <button type="button" key={r.tipo} className="report-type-card"
                 onClick={() => { setReporteSeleccionado(r.tipo); setShowExportModal(true); }}>
                 <span className="report-type-icon">{r.icono}</span>
                 <div className="report-type-info">
@@ -114,7 +76,7 @@ export const Reportes: React.FC = () => {
                   <span className="report-type-desc">{r.desc}</span>
                 </div>
                 <ChevronRight size={20} color="var(--color-text-muted)" />
-              </div>
+              </button>
             ))}
           </div>
         </Card>
@@ -122,20 +84,7 @@ export const Reportes: React.FC = () => {
         <Card variant="outlined" padding="md">
           <div className="card-header"><h3>Reportes Recientes</h3></div>
           <div className="reportes-list">
-            {mockReportes.map(r => (
-              <div key={r.id} className="reporte-item">
-                <div className="reporte-info">
-                  <span className="reporte-nombre">{r.nombre}</span>
-                  <span className="reporte-fecha">{r.fecha}</span>
-                </div>
-                <div className="reporte-actions">
-                  <Badge variant={r.estado === 'ENVIADO' ? 'success' : 'info'} size="sm">{r.estado}</Badge>
-                  <button className="action-icon" title="Descargar" onClick={() => handleDescargarReporte(r)}>
-                    <Download size={18} />
-                  </button>
-                </div>
-              </div>
-            ))}
+            {[]}
           </div>
         </Card>
       </div>

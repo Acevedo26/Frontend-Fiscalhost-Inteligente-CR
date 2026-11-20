@@ -12,17 +12,9 @@ import { useAlertas } from '../hooks/useAlertas';
 import type { AlertaDto } from '../types/alertas';
 
 
-const mockCalendario = [
-  { dia: 1, mes: 'May', label: 'IVA', tipo: 'vencimiento' },
-  { dia: 5, mes: 'May', label: 'Pago', tipo: 'recordatorio' },
-  { dia: 15, mes: 'May', label: 'D-104', tipo: 'vencimiento' },
-  { dia: 20, mes: 'May', label: 'D-125', tipo: 'vencimiento' },
-  { dia: 1, mes: 'Jun', label: 'IVA', tipo: 'vencimiento' },
-  { dia: 30, mes: 'Jun', label: 'Renta', tipo: 'vencimiento' },
-];
-
 export const Alertas: React.FC = () => {
   const [filtroPrioridad, setFiltroPrioridad] = useState('TODAS');
+  const [mesCalendario, setMesCalendario] = useState({ anio: 2026, mes: 5 });
 
   const { alertas, isLoading, marcarLeida, isMarkingLeida } = useAlertas();
   const prioridades = ['TODAS', 'ALTA', 'MEDIA', 'BAJA'];
@@ -49,11 +41,11 @@ export const Alertas: React.FC = () => {
         <Card variant="outlined" padding="md" className="calendario-card">
           <h3>Calendario Fiscal</h3>
           <div className="calendario-header">
-            <button className="calendario-nav">
+            <button className="calendario-nav" onClick={() => setMesCalendario(p => ({ ...p, mes: p.mes - 1 || 12, anio: p.mes === 1 ? p.anio - 1 : p.anio }))}>
               <ChevronLeft size={18} />
             </button>
-            <span>Mayo 2026</span>
-            <button className="calendario-nav">
+            <span>{new Date(mesCalendario.anio, mesCalendario.mes - 1).toLocaleDateString('es-CR', { month: 'long', year: 'numeric' })}</span>
+            <button className="calendario-nav" onClick={() => setMesCalendario(p => ({ ...p, mes: p.mes + 1 > 12 ? 1 : p.mes + 1, anio: p.mes === 12 ? p.anio + 1 : p.anio }))}>
               <ChevronRight size={18} />
             </button>
           </div>
@@ -66,11 +58,9 @@ export const Alertas: React.FC = () => {
             <div className="calendario-dates">
               {[...Array(30)].map((_, i) => {
                 const dia = i + 1;
-                const evento = mockCalendario.find(c => c.dia === dia);
                 return (
-                  <div key={dia} className={`calendario-date ${evento ? `calendario-date-${evento.tipo}` : ''} ${dia === 15 ? 'active' : ''}`}>
+                  <div key={dia} className={`calendario-date ${dia === 15 ? 'active' : ''}`}>
                     <span>{dia}</span>
-                    {evento && <span className="date-label">{evento.label}</span>}
                   </div>
                 );
               })}

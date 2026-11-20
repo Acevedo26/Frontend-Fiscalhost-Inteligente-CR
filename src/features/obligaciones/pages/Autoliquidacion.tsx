@@ -4,6 +4,7 @@
    ============================================ */
 
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Card } from '../../../components/common/Card';
 import { Button } from '../../../components/common/Button';
 import { Badge } from '../../../components/common/Badge';
@@ -220,7 +221,7 @@ export const  Autoliquidacion: React.FC = () => {
         <div className="banner-info">
           <Info size={16} />
           No hay deuda registrada para este período. Verifique los datos históricos.
-          <a href="/impuestos" className="banner-link">Ir a datos históricos</a>
+          <Link to="/impuestos" className="banner-link">Ir a datos históricos</Link>
         </div>
       )}
 

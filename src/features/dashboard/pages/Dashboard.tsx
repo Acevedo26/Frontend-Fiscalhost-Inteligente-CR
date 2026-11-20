@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDashboard } from '../hooks/useDashboard';
+import { useAuthContext } from '../../auth/context/AuthContext';
 import { Button } from '../../../components/common/Button';
 import { Upload } from 'lucide-react';
 import { DashboardSemaphore } from '../components/DashboardSemaphore';
