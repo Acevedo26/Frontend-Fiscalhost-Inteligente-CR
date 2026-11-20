@@ -62,17 +62,17 @@ export const SeguridadTab: React.FC = () => {
 
     try {
       await LlaveCriptograficaService.subirP12(formData);
+      setP12Progress(100);
+      setP12State('done');
+      setLlaves([{ nombre: p12Archivo, fecha: new Date().toLocaleDateString('es-CR'), estado: 'Activa' }]);
+      showSuccess(
+        'Llave Criptográfica Configurada',
+        'El certificado criptográfico ha sido validado y almacenado correctamente para la emisión de comprobantes.'
+      );
     } catch {
-      // Global error handler
+      // Global error handler already shows an error alert.
+      setP12State('error-format');
     }
-
-    setP12Progress(100);
-    setP12State('done');
-    setLlaves([{ nombre: p12Archivo, fecha: new Date().toLocaleDateString('es-CR'), estado: 'Activa' }]);
-    showSuccess(
-      'Llave Criptográfica Configurada',
-      'El certificado criptográfico ha sido validado y almacenado correctamente para la emisión de comprobantes.'
-    );
   };
 
   const handleLogout = async () => {

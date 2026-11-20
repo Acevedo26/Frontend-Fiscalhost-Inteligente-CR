@@ -102,15 +102,19 @@ export const Comprobantes: React.FC = () => {
     });
 
     if (result.isConfirmed && result.value) {
-      setIsDeleting(true);
+      let deleteOk = false;
       try {
         await OperacionesService.eliminarGasto(gastoId, result.value.trim());
         queryClient.invalidateQueries({ queryKey: ['gastos'] });
-        showSuccess('Comprobante Eliminado', 'El comprobante ha sido eliminado y auditado conforme a la Ley 8968.');
+        deleteOk = true;
       } catch {
         // Handled by global Axios interceptor
       } finally {
         setIsDeleting(false);
+      }
+
+      if (deleteOk) {
+        showSuccess('Comprobante Eliminado', 'El comprobante ha sido eliminado y auditado conforme a la Ley 8968.');
       }
     }
   };
