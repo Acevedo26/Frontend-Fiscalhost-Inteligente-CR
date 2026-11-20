@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Button } from '../../../components/common/Button';
 import { Badge } from '../../../components/common/Badge';
 import { Modal } from '../../../components/common/Modal';
@@ -90,7 +91,7 @@ export const Impuestos: React.FC = () => {
         <div className="banner-pendientes">
           <AlertTriangle size={16} />
           No se puede calcular porque hay registros pendientes de clasificación.
-          <a href="/ingresos" className="banner-link">Ir a clasificar</a>
+          <Link to="/ingresos" className="banner-link">Ir a clasificar</Link>
         </div>
       )}
 
