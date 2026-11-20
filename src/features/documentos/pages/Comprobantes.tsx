@@ -31,6 +31,7 @@ export const Comprobantes: React.FC = () => {
   const [, setFormErrors] = useState<Record<string, string>>({});
   const [dragOver, setDragOver] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
   
   const comprobantes = useMemo(() => comprobantesData || [], [comprobantesData]);
 
@@ -108,6 +109,8 @@ export const Comprobantes: React.FC = () => {
         deleteOk = true;
       } catch {
         // Handled by global Axios interceptor
+      } finally {
+        setIsDeleting(false);
       }
 
       if (deleteOk) {
@@ -172,6 +175,7 @@ export const Comprobantes: React.FC = () => {
         isLoading={isLoading}
         formatCurrency={formatCurrency}
         onDelete={handleDeleteComprobante}
+        isDeleting={isDeleting}
       />
 
       <UploadComprobanteModal

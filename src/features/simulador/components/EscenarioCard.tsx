@@ -11,6 +11,7 @@ interface EscenarioCardProps {
   isBase: boolean;
   onUpdate: (id: string, updates: Partial<Escenario>) => void;
   onDelete: (id: string) => void;
+  isDeleting?: boolean;
 }
 
 export const EscenarioCard: React.FC<EscenarioCardProps> = ({
@@ -19,6 +20,7 @@ export const EscenarioCard: React.FC<EscenarioCardProps> = ({
   isBase,
   onUpdate,
   onDelete,
+  isDeleting = false,
 }) => {
   const diff = getDiferencia(escenario, escenarioBase);
 
@@ -30,6 +32,7 @@ export const EscenarioCard: React.FC<EscenarioCardProps> = ({
           <button 
             className="eliminar-btn"
             onClick={() => onDelete(escenario.id)}
+            disabled={isDeleting}
           >
             <X size={18} />
           </button>

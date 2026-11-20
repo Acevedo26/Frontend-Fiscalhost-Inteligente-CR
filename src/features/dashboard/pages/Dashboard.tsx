@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDashboard } from '../hooks/useDashboard';
+import { useAuthContext } from '../../auth/context/AuthContext';
 import { Button } from '../../../components/common/Button';
 import { Upload } from 'lucide-react';
 import { DashboardSemaphore } from '../components/DashboardSemaphore';
@@ -19,22 +20,10 @@ export const Dashboard: React.FC<DashboardProps> = ({ userName, hasData = true }
   const navigate = useNavigate();
   const { data, isLoading } = useDashboard();
 
-  // Retrieve user name from localStorage auth state if available
-  let displayName = userName;
-  if (!displayName) {
-    try {
-      const stored = localStorage.getItem('usuario');
-      if (stored) {
-        const u = JSON.parse(stored);
-        displayName = u.nombre || u.nombreCompleto || u.correoElectronico;
-      }
-    } catch {
-      // Ignore parse error
-    }
-  }
-  if (!displayName) {
-    displayName = 'Lisbeth Fallas';
-  }
+  const { user } = useAuthContext();
+
+  // Retrieve user name from auth context
+  let displayName = userName || user?.nombreCompleto || user?.nombre || user?.correoElectronico;
 
   return (
     <div className="dashboard">

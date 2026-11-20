@@ -23,9 +23,11 @@ interface RevocarContadorModalProps {
 export const RevocarContadorModal: React.FC<RevocarContadorModalProps> = ({
   contador,
   onClose,
-  onRevocar
+  onRevocar,
 }) => {
   if (!contador) return null;
+
+  const [isRevoking, setIsRevoking] = React.useState<boolean>(false);
 
   const handleConfirmRevocar = async () => {
     const confirm = await showConfirm(
@@ -41,6 +43,8 @@ export const RevocarContadorModal: React.FC<RevocarContadorModalProps> = ({
       revokeOk = true;
     } catch {
       // Handled by global interceptor
+    } finally {
+      setIsRevoking(false);
     }
 
     if (revokeOk) {
@@ -58,7 +62,9 @@ export const RevocarContadorModal: React.FC<RevocarContadorModalProps> = ({
         </div>
         <div className="modal-actions">
           <Button variant="secondary" onClick={onClose}>Cancelar</Button>
-          <Button variant="danger" onClick={handleConfirmRevocar}>Revocar acceso</Button>
+          <Button variant="danger" onClick={handleConfirmRevocar} loading={isRevoking}>
+            Revocar acceso
+          </Button>
         </div>
       </div>
     </Modal>
