@@ -9,8 +9,8 @@ declare module 'axios' {
   }
 }
 
-// Get base URL from env or fallback to localhost
-export const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5062/api';
+// Get base URL from env (required for production)
+export const API_BASE_URL = import.meta.env.VITE_API_URL;
 
 export const apiClient = axios.create({
   baseURL: API_BASE_URL,

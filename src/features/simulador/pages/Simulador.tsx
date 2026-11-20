@@ -16,16 +16,10 @@ import { EscenarioCard } from '../components/EscenarioCard';
 import { showWarning, showSuccess, showConfirm } from '../../../utils/alerts';
 import { SimuladorService } from '../services/SimuladorService';
 
-const mockEscenarios: Escenario[] = [
-  { id: 'base', nombre: 'Escenario Base', ingresos: 350000, gastos: 80000, activo: 0 },
-  { id: '1', nombre: 'Aumento reservas 20%', ingresos: 420000, gastos: 85000, activo: 0 },
-  { id: '2', nombre: 'Nueva propiedad', ingresos: 550000, gastos: 150000, activo: 25000000 },
-];
-
 export const Simulador: React.FC = () => {
   const [modo, setModo] = useState<'historico' | 'personalizado'>('historico');
   const [periodoBase, setPeriodoBase] = useState('2025');
-  const [escenarios, setEscenarios] = useState<Escenario[]>(mockEscenarios);
+  const [escenarios, setEscenarios] = useState<Escenario[]>([]);
   const [nuevoEscenario, setNuevoEscenario] = useState({ nombre: '', ingresos: 350000, gastos: 80000, activo: 0 });
   const [showComparison, setShowComparison] = useState(false);
 
