@@ -142,7 +142,7 @@ export const Mora: React.FC = () => {
   const handleContactSupport = () => {
     showInfo(
       'Soporte Fiscal Especializado',
-      'Para regularizar obligaciones sin fecha de vencimiento o presentar consultas sobre liquidaciones de mora ante la DGT, contáctenos al correo soporte@fiscalhost.cr o llame al (+506) 2200-8900.'
+      'Para regularizar obligaciones sin fecha de vencimiento o presentar consultas sobre liquidaciones de mora ante la DGT, acuda a las oficinas de la Administración Tributaria o comuníquese por los canales oficiales habilitados.'
     );
   };
 

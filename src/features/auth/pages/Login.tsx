@@ -73,7 +73,7 @@ export const Login: FC = () => {
     try {
       const data = await AuthService.login({
         correo: trimmedEmail,
-        clave: password,
+        contrasena: password,
       });
 
       if (data && data.token) {
@@ -82,7 +82,6 @@ export const Login: FC = () => {
         const usuarioObj = data.usuario || {
           correoElectronico: trimmedEmail,
           nombreCompleto: trimmedEmail.split('@')[0],
-          rol: 'Contribuyente',
         };
         localStorage.setItem('usuario', JSON.stringify(usuarioObj));
 
@@ -116,7 +115,7 @@ export const Login: FC = () => {
     e.preventDefault();
     await showInfo(
       'Recuperación de Contraseña',
-      'Para restablecer el acceso a su cuenta tributaria, envíe una solicitud a soporte@fiscalhost.cr indicando su número de cédula o comuníquese con su contador asignado.'
+      'Para restablecer el acceso a su cuenta tributaria, comuníquese por los canales oficiales de la Administración Tributaria o con su contador asignado.'
     );
   };
 

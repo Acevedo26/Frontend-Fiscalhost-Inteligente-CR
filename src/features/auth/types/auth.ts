@@ -1,24 +1,26 @@
 export interface LoginRequest {
-  correo?: string;
-  email?: string;
-  clave?: string;
-  password?: string;
-  contrasena?: string;
+  /** Format: email */
+  correo: string;
+  contrasena: string;
 }
 
 export interface RegistroRequest {
-  nombre?: string;
-  nombreCompleto?: string;
-  correo?: string;
-  correoElectronico?: string;
-  email?: string;
-  clave?: string;
-  password?: string;
-  contrasena?: string;
-  identificacion?: string;
-  numeroIdentificacion?: string;
-  tipoIdentificacion?: string;
-  razonSocial?: string;
+  nombreCompleto: string;
+  /** @nullable */
+  nombre?: string | null;
+  /** Format: email */
+  correoElectronico: string;
+  /** @nullable */
+  correo?: string | null;
+  contrasena: string;
+  /** @nullable */
+  clave?: string | null;
+  numeroIdentificacion: string;
+  /** @nullable */
+  identificacion?: string | null;
+  tipoIdentificacion: string;
+  /** @nullable */
+  razonSocial?: string | null;
 }
 
 export interface UsuarioInfo {

@@ -11,6 +11,14 @@ export interface CrearOperacionDto {
   huesped?: string;
   numeroFactura?: string;
   clasificacion?: string;
+  /** @default "CRC" — pendiente de exponer en la UI */
+  moneda?: "CRC" | "USD";
+  /** @default true — pendiente de exponer en la UI */
+  esDeducibleRenta?: boolean;
+  /** @default true — pendiente de exponer en la UI */
+  esCreditoFiscalValido?: boolean;
+  /** @default 'General' — pendiente de exponer en la UI */
+  tipoGasto?: string;
 }
 
 export interface ActualizarGastoDto {
@@ -19,6 +27,9 @@ export interface ActualizarGastoDto {
   montoTotal: number;
   fechaEmision: string;
   tipoGasto?: string;
+  /** @default "CRC" — pendiente de exponer en la UI */
+  moneda?: "CRC" | "USD";
+  numeroFactura?: string | null;
 }
 
 export interface ActualizarReservaDto {
@@ -29,11 +40,45 @@ export interface ActualizarReservaDto {
   huesped?: string;
 }
 
+// Valores por defecto del contrato de backend (Costa Rica). Pendiente de exponer
+// como campos de elección en la UI para no hardcodear datos del usuario.
+const MONEDA_CRC: "CRC" | "USD" = "CRC";
+const TIPO_CAMBIO_CRC = 1.0;
+const TIPO_GASTO_DEFAULT = 'General';
+
+const clasificacionFiscalDe = (clasificacion?: string): "GRAVADO" | "EXENTO" | "GRAVADO_CON_RETENCION" => {
+  switch (clasificacion) {
+    case 'EXENTO': return "EXENTO";
+    case 'RETENCION_15': return "GRAVADO_CON_RETENCION";
+    case 'GRAVADO_13':
+    default: return "GRAVADO";
+  }
+};
+
+const plataformaOrigenDe = (fuente?: string): "AIRBNB" | "BOOKING" | "VRBO" | "DIRECTA" | "OTRA" => {
+  switch (fuente?.toUpperCase()) {
+    case 'AIRBNB': return "AIRBNB";
+    case 'BOOKING': return "BOOKING";
+    case 'VRBO': return "VRBO";
+    case 'PAYPAL': return "OTRA";
+    case 'DIRECTO':
+    default: return "DIRECTA";
+  }
+};
+
 export const FinanzasService = {
   getOperaciones: async () => {
     try {
-      const res = await apiClient.get('/operaciones', { skipGlobalAlert: true });
-      return res.data;
+      // `/operaciones` (adapter del prototipo) se elimina en el back.
+      // Se consulta por separado reservas y gastos, los únicos que quedan.
+      const [reservasRes, gastosRes] = await Promise.all([
+        apiClient.get('/operaciones-manuales/reservas'),
+        apiClient.get('/operaciones-manuales/gastos'),
+      ]);
+      return {
+        ingresos: reservasRes.data ?? [],
+        gastos: gastosRes.data ?? [],
+      };
     } catch {
       // Si el endpoint falla (sin datos aún, 401, etc.) devolver estructura vacía
       // para que la pantalla muestre los datos iniciales en lugar de quedar en blanco.
@@ -42,27 +87,36 @@ export const FinanzasService = {
   },
 
   crearOperacion: async (data: CrearOperacionDto) => {
+    const fechaISO = data.fecha.includes('T') ? data.fecha : `${data.fecha}T00:00:00Z`;
+    const fechaSolo = data.fecha.includes('T') ? data.fecha.split('T')[0] : data.fecha;
+    const [anio, mes] = fechaSolo.split('-').map(Number);
+    const hoy = new Date();
+
     if (data.tipo === 'INGRESO') {
-      // Use the manuales/reserva endpoint for reservations (BUG-001 fix)
       const res = await apiClient.post('/operaciones-manuales/reserva', {
-        fechaReserva: data.fecha.includes('T') ? data.fecha : `${data.fecha}T00:00:00Z`,
-        monto: Number(data.monto),
-        huesped: data.huesped || data.concepto,
+        fechaInicio: fechaISO,
+        fechaFin: fechaISO,
+        nombreHuesped: data.huesped || data.concepto || null,
+        montoBruto: Number(data.monto),
+        moneda: data.moneda ?? MONEDA_CRC,
+        tipoCambio: TIPO_CAMBIO_CRC,
+        clasificacionFiscal: clasificacionFiscalDe(data.clasificacion),
+        plataformaOrigen: plataformaOrigenDe(data.fuente),
+        periodoFiscalAnio: anio ?? hoy.getFullYear(),
+        periodoFiscalMes: mes ?? hoy.getMonth() + 1,
       });
       return res.data;
     } else {
-      // Use the manuales/gasto endpoint for expenses
-      // Backend will calculate IVA (13%) and net amount automatically
       const res = await apiClient.post('/operaciones-manuales/gasto', {
         justificacion: data.concepto,
-        proveedor: data.proveedor || 'Proveedor General',
-        numeroFactura: data.numeroFactura || `FAC-${Date.now()}`,
-        fechaEmision: data.fecha.includes('T') ? data.fecha : `${data.fecha}T00:00:00Z`,
+        proveedor: data.proveedor || data.concepto || '',
+        numeroFactura: data.numeroFactura ?? null,
+        fechaEmision: fechaSolo,
         montoTotal: Number(data.monto),
-        moneda: 1, // TipoMoneda.CRC
-        tipoGasto: 'General',
-        esDeducibleRenta: true,
-        esCreditoFiscalValido: true,
+        moneda: data.moneda ?? MONEDA_CRC,
+        tipoGasto: data.tipoGasto ?? TIPO_GASTO_DEFAULT,
+        esDeducibleRenta: data.esDeducibleRenta ?? true,
+        esCreditoFiscalValido: data.esCreditoFiscalValido ?? true,
       });
       return res.data;
     }
@@ -71,13 +125,12 @@ export const FinanzasService = {
   actualizarGasto: async (id: string | number, data: ActualizarGastoDto) => {
     const res = await apiClient.put(`/operaciones-manuales/gasto/${id}`, {
       justificacion: data.justificacion,
-      proveedor: data.proveedor || 'Proveedor General',
-      numeroFactura: `FAC-${id}`,
+      proveedor: data.proveedor,
+      numeroFactura: data.numeroFactura ?? null,
       fechaEmision: data.fechaEmision,
       montoTotal: Number(data.montoTotal),
-      moneda: 1, // TipoMoneda.CRC
-      tipoGasto: data.tipoGasto || 'General',
-      esDeducibleRenta: true,
+      moneda: data.moneda ?? MONEDA_CRC,
+      tipoGasto: data.tipoGasto ?? TIPO_GASTO_DEFAULT,
     });
     return res.data;
   },
@@ -111,13 +164,16 @@ export const FinanzasService = {
   },
 
   reclasificarIngreso: async (id: string | number, clasificacion: string, justificacion: string) => {
-    // Map classification string to enum integer or string expected by backend:
-    // 1: Gravado13, 2: Exento
-    let clasificacionIva = 1;
-    if (clasificacion === 'EXENTO' || clasificacion.toLowerCase().includes('exento')) {
-      clasificacionIva = 2;
+    const intId =
+      typeof id === 'number' ? id : parseInt(String(id), 10);
+    if (!intId) {
+      throw new Error('ID de ingreso inválido para reclasificación.');
     }
-    const res = await apiClient.put(`/clasificacion-ingresos/${id}/reclasificar`, {
+    let clasificacionIva: "Gravado13" | "Exento" = "Gravado13";
+    if (clasificacion === 'EXENTO' || clasificacion.toLowerCase().includes('exento')) {
+      clasificacionIva = "Exento";
+    }
+    const res = await apiClient.put(`/clasificacion-ingresos/${intId}/reclasificar`, {
       clasificacionIva,
       justificacion,
     });
@@ -127,7 +183,6 @@ export const FinanzasService = {
   importarCsv: async (file: File): Promise<ImportacionCsvResponse> => {
     const formData = new FormData();
     formData.append('archivo', file);
-    // NO establecer Content-Type manualmente: axios lo hace automáticamente con el boundary correcto
     const res = await apiClient.post<ImportacionCsvResponse>('/importaciones/csv', formData);
     return res.data;
   },
@@ -142,5 +197,5 @@ export const FinanzasService = {
   getDeudaObligacion: async (id: string): Promise<ObligacionDto> => {
     const res = await apiClient.get<ObligacionDto>(`/obligaciones/${id}/deuda`);
     return res.data;
-  },
+  }
 };

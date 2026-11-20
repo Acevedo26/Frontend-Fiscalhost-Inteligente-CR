@@ -3,30 +3,26 @@ import type { LoginRequest, LoginResponse, RegistroRequest, RegistroResponse } f
 
 export const AuthService = {
   login: async (credentials: LoginRequest): Promise<LoginResponse> => {
-    const payload = {
-      correo: credentials.correo || credentials.email || '',
-      contrasena: credentials.contrasena || credentials.clave || credentials.password || '',
-      clave: credentials.clave || credentials.contrasena || credentials.password || '',
-    };
-    const response = await apiClient.post<LoginResponse>('/auth/login', payload);
+    const response = await apiClient.post<LoginResponse>('/auth/login', {
+      correo: credentials.correo,
+      contrasena: credentials.contrasena,
+    });
     return response.data;
   },
 
   register: async (data: RegistroRequest): Promise<RegistroResponse> => {
-    const payload = {
-      nombreCompleto: data.nombreCompleto || data.nombre || '',
-      nombre: data.nombre || data.nombreCompleto || '',
-      correoElectronico: data.correoElectronico || data.correo || data.email || '',
-      correo: data.correo || data.correoElectronico || data.email || '',
-      contrasena: data.contrasena || data.clave || data.password || '',
-      clave: data.clave || data.contrasena || data.password || '',
-      numeroIdentificacion: data.numeroIdentificacion || data.identificacion || '',
-      identificacion: data.identificacion || data.numeroIdentificacion || '',
-      tipoIdentificacion: data.tipoIdentificacion || 'FISICA',
-      razonSocial: data.razonSocial,
-    };
-    const response = await apiClient.post<RegistroResponse>('/auth/registro', payload);
+    const response = await apiClient.post<RegistroResponse>('/auth/register', {
+      nombreCompleto: data.nombreCompleto,
+      nombre: data.nombre ?? null,
+      correoElectronico: data.correoElectronico,
+      correo: data.correo ?? null,
+      contrasena: data.contrasena,
+      clave: data.clave ?? null,
+      numeroIdentificacion: data.numeroIdentificacion,
+      identificacion: data.identificacion ?? null,
+      tipoIdentificacion: data.tipoIdentificacion,
+      razonSocial: data.razonSocial ?? null,
+    });
     return response.data;
   }
 };
-

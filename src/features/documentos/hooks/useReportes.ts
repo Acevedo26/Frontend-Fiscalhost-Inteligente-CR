@@ -5,7 +5,7 @@ export const useContadores = () => {
   const { user } = useAuth();
   return useQuery({
     queryKey: ['contadores', user?.id],
-    queryFn: () => ReportesService.getContadores(user?.id!),
+    queryFn: () => ReportesService.getContadores(),
     enabled: !!user?.id,
   });
 };
@@ -23,7 +23,7 @@ export const useRevocarContador = () => {
   const queryClient = useQueryClient();
   const { user } = useAuth();
   return useMutation({
-    mutationFn: (id: string) => ReportesService.revocarContador(id, user?.id!),
+    mutationFn: (id: string) => ReportesService.revocarContador(id, 'Revocación de acceso de contador solicitada por el propietario.'),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['contadores', user?.id] });
     },

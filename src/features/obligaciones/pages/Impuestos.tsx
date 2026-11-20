@@ -55,8 +55,10 @@ export const Impuestos: React.FC = () => {
   ];
 
   const handleAplicarRegimen = async (r: 'CAPITAL' | 'UTILIDADES') => {
+    // Mapeo al enum del backend: "CAPITAL_INMOBILIARIO" | "UTILIDADES".
+    const regimenValor = r === 'CAPITAL' ? 'CAPITAL_INMOBILIARIO' : 'UTILIDADES';
     try {
-      await ImpuestosService.cambiarRegimen(r, 2026, 4);
+      await ImpuestosService.cambiarRegimen(regimenValor, 2026, 4);
     } catch {
       // Response handled by Axios interceptor
     }
