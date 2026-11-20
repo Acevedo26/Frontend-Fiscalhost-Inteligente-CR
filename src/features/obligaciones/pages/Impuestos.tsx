@@ -46,6 +46,7 @@ export const Impuestos: React.FC = () => {
   const baseUtilidades = ingresosRenta - gastosRenta;
   const impuestoUtilidades = baseUtilidades * 0.25;
   const regimenRecomendado = impuestoCapital <= impuestoUtilidades ? 'CAPITAL' : 'UTILIDADES';
+  const [isAplicandoRegimen, setIsAplicandoRegimen] = React.useState(false);
 
   const borradorIVA = [
     { campo: 'Casilla 1 — Ingresos gravados', valor: formatCurrency(ingresos) },
@@ -57,10 +58,13 @@ export const Impuestos: React.FC = () => {
   const handleAplicarRegimen = async (r: 'CAPITAL' | 'UTILIDADES') => {
     // Mapeo al enum del backend: "CAPITAL_INMOBILIARIO" | "UTILIDADES".
     const regimenValor = r === 'CAPITAL' ? 'CAPITAL_INMOBILIARIO' : 'UTILIDADES';
+    setIsAplicandoRegimen(true);
     try {
       await ImpuestosService.cambiarRegimen(regimenValor, 2026, 4);
     } catch {
       // Response handled by Axios interceptor
+    } finally {
+      setIsAplicandoRegimen(false);
     }
     setRegimenActivo(r);
     showSuccess(
@@ -137,6 +141,7 @@ export const Impuestos: React.FC = () => {
           onAplicarRegimen={handleAplicarRegimen}
           setShowComparativa={setShowComparativa}
           formatCurrency={formatCurrency}
+          isAplicando={isAplicandoRegimen}
         />
       )}
 

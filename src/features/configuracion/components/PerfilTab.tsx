@@ -145,7 +145,7 @@ export const PerfilTab: React.FC<PerfilTabProps> = ({ configuracionData, ACTIVID
               {showActividadDropdown && actividadesFiltradas.length > 0 && (
                 <div className="typeahead-dropdown">
                   {actividadesFiltradas.map((a: any) => (
-                    <button key={a.value} className="typeahead-option" onMouseDown={() => handleSelectActividad(a)}>
+                    <button key={a.value} className="typeahead-option" onClick={() => handleSelectActividad(a)}>
                       <span className="typeahead-code">{a.value}</span>
                       <span>{a.label.split('—')[1]?.trim()}</span>
                     </button>
@@ -170,7 +170,7 @@ export const PerfilTab: React.FC<PerfilTabProps> = ({ configuracionData, ACTIVID
           <div className="nise-field">
             <div className="nise-label-row">
               <label className="input-label">NISE (Número de Identificación del Servicio Eléctrico)</label>
-              <button className="nise-tooltip-btn" onMouseEnter={() => setShowNiseTooltip(true)} onMouseLeave={() => setShowNiseTooltip(false)}>
+              <button type="button" className="nise-tooltip-btn" aria-describedby="nise-tooltip" onMouseEnter={() => setShowNiseTooltip(true)} onMouseLeave={() => setShowNiseTooltip(false)}>
                 <Info size={14} />
                 {showNiseTooltip && (
                   <div className="nise-tooltip">El NISE es el número de medidor eléctrico de tu propiedad, usado para validar el domicilio fiscal.</div>

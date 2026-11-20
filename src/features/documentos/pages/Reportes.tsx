@@ -111,7 +111,7 @@ export const Reportes: React.FC = () => {
               { tipo: 'DETALLE_GASTOS', icono: <FileText size={22} />, desc: 'Listado detallado de gastos' },
               { tipo: 'EXPORTACION_ATV', icono: <Upload size={22} />, desc: 'Exportación en formato ATV' },
             ].map(r => (
-              <div key={r.tipo} className="report-type-card"
+              <button type="button" key={r.tipo} className="report-type-card"
                 onClick={() => { setReporteSeleccionado(r.tipo); setShowExportModal(true); }}>
                 <span className="report-type-icon">{r.icono}</span>
                 <div className="report-type-info">
@@ -119,7 +119,7 @@ export const Reportes: React.FC = () => {
                   <span className="report-type-desc">{r.desc}</span>
                 </div>
                 <ChevronRight size={20} color="var(--color-text-muted)" />
-              </div>
+              </button>
             ))}
           </div>
         </Card>
