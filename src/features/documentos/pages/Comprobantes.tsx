@@ -31,6 +31,7 @@ export const Comprobantes: React.FC = () => {
   const [, setFormErrors] = useState<Record<string, string>>({});
   const [dragOver, setDragOver] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
   
   const comprobantes = useMemo(() => comprobantesData || [], [comprobantesData]);
 
@@ -101,12 +102,15 @@ export const Comprobantes: React.FC = () => {
     });
 
     if (result.isConfirmed && result.value) {
+      setIsDeleting(true);
       try {
         await OperacionesService.eliminarGasto(gastoId, result.value.trim());
         queryClient.invalidateQueries({ queryKey: ['gastos'] });
         showSuccess('Comprobante Eliminado', 'El comprobante ha sido eliminado y auditado conforme a la Ley 8968.');
       } catch {
         // Handled by global Axios interceptor
+      } finally {
+        setIsDeleting(false);
       }
     }
   };
@@ -167,6 +171,7 @@ export const Comprobantes: React.FC = () => {
         isLoading={isLoading}
         formatCurrency={formatCurrency}
         onDelete={handleDeleteComprobante}
+        isDeleting={isDeleting}
       />
 
       <UploadComprobanteModal

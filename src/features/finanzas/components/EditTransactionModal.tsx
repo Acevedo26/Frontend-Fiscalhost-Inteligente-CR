@@ -15,10 +15,11 @@ interface EditTransactionModalProps {
   editRazonError: string;
   setEditRazonError: (error: string) => void;
   handleSaveEdit: () => void;
+  isSaving?: boolean;
 }
 
 export const EditTransactionModal: React.FC<EditTransactionModalProps> = ({
-  editTx, onClose, editMonto, setEditMonto, editRazon, setEditRazon, editRazonError, setEditRazonError, handleSaveEdit
+  editTx, onClose, editMonto, setEditMonto, editRazon, setEditRazon, editRazonError, setEditRazonError, handleSaveEdit, isSaving = false
 }) => {
   const handleSubmit = () => {
     const montoNum = Number(editMonto);
@@ -67,7 +68,9 @@ export const EditTransactionModal: React.FC<EditTransactionModalProps> = ({
         />
         <div className="modal-actions">
           <Button variant="secondary" onClick={onClose}>Cancelar</Button>
-          <Button variant="primary" onClick={handleSubmit}>Guardar</Button>
+          <Button variant="primary" onClick={handleSubmit} loading={isSaving}>
+            Guardar
+          </Button>
         </div>
       </div>
     </Modal>

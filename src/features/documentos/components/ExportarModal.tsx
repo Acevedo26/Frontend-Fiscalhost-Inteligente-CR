@@ -52,22 +52,19 @@ export const ExportarModal: React.FC<ExportarModalProps> = ({
     }
 
     const reportLabel = getTipoReporteLabel(reporteSeleccionado || 'Reporte_General');
-    const dummyContent = [
-      `----- BEGIN FISCALHOST ENCRYPTED REPORT -----`,
-      `Tipo de Reporte: ${reportLabel}`,
+    const reportContent = [
+      `REPORTE TRIBUTARIO: ${reportLabel}`,
       `Formato: ${exportFormat}`,
       `Periodo: Abril 2026`,
-      `Cifrado: AES-256-GCM`,
-      `Firma Digital Ley 8454: OK`,
-      `Timestamp: ${new Date().toISOString()}`,
-      `----- END FISCALHOST ENCRYPTED REPORT -----`,
+      `Generado: ${new Date().toISOString()}`,
+      `Sistema: FiscalHost Inteligente CR`,
     ].join('\n');
 
-    const blob = new Blob([dummyContent], { type: 'application/octet-stream' });
+    const blob = new Blob([reportContent], { type: 'text/plain;charset=utf-8' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `Reporte_${reportLabel.replace(/\s+/g, '_')}_Cifrado.${exportFormat.toLowerCase()}`;
+    a.download = `Reporte_${reportLabel.replace(/\s+/g, '_')}.${exportFormat.toLowerCase()}`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -76,7 +73,7 @@ export const ExportarModal: React.FC<ExportarModalProps> = ({
     setExportDone(true);
     showSuccess(
       'Exportación Exitosa',
-      `El reporte "${reportLabel}" ha sido cifrado con su contraseña y descargado exitosamente en formato ${exportFormat}.`
+      `El reporte "${reportLabel}" ha sido generado y descargado exitosamente en formato ${exportFormat}.`
     );
   };
 

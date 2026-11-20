@@ -154,11 +154,11 @@ export const FinanzasService = {
   },
 
   eliminarReserva: async (id: string | number, razonCambio: string) => {
+    // razonCambio va como query param (según Swagger DELETE /operaciones-manuales/reserva/{id}).
+    // justificacion via body opcional (DeleteReservaRequest lo admite).
     const res = await apiClient.delete(`/operaciones-manuales/reserva/${id}`, {
-      data: {
-        razonCambio,
-        justificacion: razonCambio,
-      },
+      params: { razonCambio },
+      data: { justificacion: razonCambio },
     });
     return res.data;
   },

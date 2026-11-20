@@ -8,6 +8,7 @@ import { Modal } from '../../../components/common/Modal';
 import { CheckCircle, AlertTriangle, Info } from 'lucide-react';
 import { showWarning, showSuccess } from '../../../utils/alerts';
 import { ConfiguracionService } from '../services/ConfiguracionService';
+import { useAuthContext } from '../../auth/context/AuthContext';
 
 interface PerfilTabProps {
   configuracionData: any;
@@ -15,8 +16,13 @@ interface PerfilTabProps {
 }
 
 export const PerfilTab: React.FC<PerfilTabProps> = ({ configuracionData, ACTIVIDADES }) => {
-  const [nombreCompleto, setNombreCompleto] = useState(configuracionData?.nombreCompleto || 'Lisbeth Fallas');
-  const [email] = useState(configuracionData?.email || 'lisbeth@email.com');
+  const { user } = useAuthContext();
+  const [nombreCompleto, setNombreCompleto] = useState(
+    configuracionData?.nombreCompleto || user?.nombreCompleto || user?.nombre || ''
+  );
+  const [email] = useState(
+    configuracionData?.email || user?.correoElectronico || user?.correo || ''
+  );
   const [tipoIdentificacion, setTipoIdentificacion] = useState(configuracionData?.tipoIdentificacion || 'FISICA');
   const [identificacion, setIdentificacion] = useState(configuracionData?.identificacion || '01-0234-5678');
   const [regimen, setRegimen] = useState<'CAPITAL' | 'UTILIDADES'>(configuracionData?.regimen || 'CAPITAL');
@@ -112,7 +118,7 @@ export const PerfilTab: React.FC<PerfilTabProps> = ({ configuracionData, ACTIVID
               value={nombreCompleto}
               onChange={(e: any) => setNombreCompleto(e.target.value)}
             />
-            <Input label="Email" type="email" value={email} disabled />
+            <Input label="Email" type="email" value={email} />
           </div>
           <div className="form-row">
             <Select
@@ -145,7 +151,7 @@ export const PerfilTab: React.FC<PerfilTabProps> = ({ configuracionData, ACTIVID
               {showActividadDropdown && actividadesFiltradas.length > 0 && (
                 <div className="typeahead-dropdown">
                   {actividadesFiltradas.map((a: any) => (
-                    <button key={a.value} className="typeahead-option" onMouseDown={() => handleSelectActividad(a)}>
+                    <button key={a.value} className="typeahead-option" onClick={() => handleSelectActividad(a)}>
                       <span className="typeahead-code">{a.value}</span>
                       <span>{a.label.split('—')[1]?.trim()}</span>
                     </button>
@@ -170,7 +176,7 @@ export const PerfilTab: React.FC<PerfilTabProps> = ({ configuracionData, ACTIVID
           <div className="nise-field">
             <div className="nise-label-row">
               <label className="input-label">NISE (Número de Identificación del Servicio Eléctrico)</label>
-              <button className="nise-tooltip-btn" onMouseEnter={() => setShowNiseTooltip(true)} onMouseLeave={() => setShowNiseTooltip(false)}>
+              <button type="button" className="nise-tooltip-btn" aria-describedby="nise-tooltip" onMouseEnter={() => setShowNiseTooltip(true)} onMouseLeave={() => setShowNiseTooltip(false)}>
                 <Info size={14} />
                 {showNiseTooltip && (
                   <div className="nise-tooltip">El NISE es el número de medidor eléctrico de tu propiedad, usado para validar el domicilio fiscal.</div>

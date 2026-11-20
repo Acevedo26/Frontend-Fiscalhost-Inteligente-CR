@@ -10,6 +10,9 @@ interface IngresosTableProps {
   onEdit: (tx: Transaccion) => void;
   onDelete: (id: number | string) => void;
   onReclassify: (tx: Transaccion) => void;
+  isSavingEdit?: boolean;
+  isSavingReclasif?: boolean;
+  isDeleting?: boolean;
 }
 
 const formatCurrency = (amount: number) =>
@@ -25,7 +28,7 @@ const clasifBadge = (c: Clasificacion) => {
   return map[c] ?? map.PENDIENTE; 
 };
 
-export const IngresosTable: React.FC<IngresosTableProps> = ({ activeTab, list, onEdit, onDelete, onReclassify }) => {
+export const IngresosTable: React.FC<IngresosTableProps> = ({ activeTab, list, onEdit, onDelete, onReclassify, isSavingEdit = false, isSavingReclasif = false, isDeleting = false }) => {
   return (
     <Card variant="outlined" padding="none">
       <div className="table-container">
@@ -60,17 +63,17 @@ export const IngresosTable: React.FC<IngresosTableProps> = ({ activeTab, list, o
                       <Badge variant={clasifBadge(tx.clasificacion).variant} size="sm">
                         {clasifBadge(tx.clasificacion).label}
                       </Badge>
-                      <button className="action-btn" title="Reclasificar" onClick={() => onReclassify(tx)}>
+                      <button className="action-btn" title="Reclasificar" onClick={() => onReclassify(tx)} disabled={isSavingReclasif}>
                         <RefreshCw size={14} />
                       </button>
                     </div>
                   </td>
                 )}
                 <td className="cell-actions">
-                  <button className="action-btn" title="Editar" onClick={() => onEdit(tx)}>
+                  <button className="action-btn" title="Editar" onClick={() => onEdit(tx)} disabled={isSavingEdit}>
                     <Pencil size={16} />
                   </button>
-                  <button className="action-btn action-btn-danger" title="Eliminar" onClick={() => onDelete(tx.id)}>
+                  <button className="action-btn action-btn-danger" title="Eliminar" onClick={() => onDelete(tx.id)} disabled={isDeleting}>
                     <Trash2 size={16} />
                   </button>
                 </td>
