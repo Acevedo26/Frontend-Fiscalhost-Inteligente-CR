@@ -24,8 +24,8 @@ export const Configuracion: React.FC = () => {
   const { data: logsData } = useAuditoriaLogs(activeSection === 'auditoria');
   const { data: actividadesData } = useActividades(isPerfilActivo);
 
-  const ACTIVIDADES = actividadesData || [];
-  const logsToDisplay = logsData || [];
+  const ACTIVIDADES = actividadesData ?? [];
+  const logsToDisplay = logsData ?? [];
 
   const sections = [
     { id: 'perfil', label: 'Perfil Tributario', icon: <User size={18} /> },
