@@ -114,6 +114,131 @@
   gap: var(--space-lg);
 }
 
+/* Progreso del recorrido */
+.guia-progreso {
+  margin-left: auto;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  background-color: var(--color-background);
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-border);
+}
+
+/* Aviso de función en demostración */
+.guia-aviso-demo {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+  background-color: var(--color-background);
+  border: 1px solid var(--color-border-dark);
+  border-radius: var(--radius-md);
+  color: var(--color-text-secondary);
+  font-size: var(--text-sm);
+}
+
+/* Tarjeta de paso del recorrido */
+.guia-paso {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  padding: var(--space-md);
+  background-color: var(--color-background);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.guia-indicacion {
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin: 0;
+  padding-bottom: var(--space-xs);
+  border-bottom: 2px solid var(--color-primary);
+  display: inline-block;
+}
+
+.guia-explicacion {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  margin: 0;
+  line-height: 1.6;
+}
+
+.guia-accion,
+.guia-resultado {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  font-size: var(--text-sm);
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.guia-accion strong,
+.guia-resultado strong {
+  color: var(--color-text-secondary);
+  min-width: 130px;
+  flex-shrink: 0;
+}
+
+/* Resaltar botón primario en paso final */
+.guia-footer .btn-finalizar {
+  background-color: var(--color-success);
+  border-color: var(--color-success);
+  color: var(--color-text-inverse);
+}
+
+/* Resumen de progreso */
+.progreso-resumen {
+  margin-top: var(--space-xs);
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+}
+
+/* Fila de encabezado de tarjeta (icono + check) */
+.guia-header-fila {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-xs);
+}
+
+.guia-check {
+  color: var(--color-success);
+}
+
+/* Tarjeta completada */
+.guia-card-completada {
+  opacity: 0.9;
+  border-color: var(--color-success);
+}
+
+.guia-badge-completada {
+  margin-left: var(--space-xs);
+  font-size: var(--text-xs);
+  background-color: var(--color-success);
+  color: var(--color-text-inverse);
+}
+
+/* Contador de pasos */
+.guia-pasos-contador {
+  display: inline-block;
+  margin-top: var(--space-xs);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
+
+/* Badge demostración */
+.guia-badge-demo {
+  margin-left: var(--space-xs);
+  font-size: var(--text-xs);
+  background-color: var(--color-accent);
+  color: var(--color-text-inverse);
+}
+
 .guia-header {
   display: flex;
   align-items: center;
@@ -201,4 +326,308 @@
   .category-btn {
     flex-shrink: 0;
   }
+}
+
+/* ========== Recorrido pedagógico: estilos modernos ========== */
+
+.guia-progreso {
+  margin-left: auto;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  background-color: var(--color-background);
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-border);
+}
+
+.guia-aviso-demo {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+  background-color: var(--color-background);
+  border: 1px solid var(--color-border-dark);
+  border-radius: var(--radius-md);
+  color: var(--color-text-secondary);
+  font-size: var(--text-sm);
+}
+
+/* Tarjeta de paso */
+.guia-paso {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  padding: var(--space-md);
+  background-color: var(--color-background);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.guia-fase {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-xs);
+}
+
+.guia-fase-badge {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-full);
+  border: 1px solid;
+  background-color: rgba(255,255,255,0.6);
+}
+
+.guia-paso-titulo {
+  font-size: var(--text-xl);
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.guia-indicacion {
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin: 0 0 var(--space-xs) 0;
+  padding-bottom: var(--space-xs);
+  border-bottom: 2px solid var(--color-primary);
+  display: inline-block;
+}
+
+.guia-explicacion-card {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  background-color: var(--color-surface);
+  border-left: 4px solid var(--color-accent);
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--space-xs);
+}
+
+.guia-icono-ayuda {
+  color: var(--color-accent);
+  flex-shrink: 0;
+  margin-top: var(--space-xs);
+}
+
+.guia-explicacion {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  margin: 0;
+  line-height: 1.6;
+}
+
+.guia-accion,
+.guia-resultado {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  font-size: var(--text-sm);
+  color: var(--color-text-primary);
+  margin: 0 0 var(--space-xs) 0;
+}
+
+.guia-accion strong,
+.guia-resultado strong {
+  color: var(--color-text-secondary);
+  min-width: 130px;
+  flex-shrink: 0;
+}
+
+.guia-ejemplo {
+  margin-top: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  background-color: var(--color-background);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-sm);
+}
+
+.guia-ejemplo p {
+  font-size: var(--text-xs);
+  color: var(--color-text-secondary);
+  margin: 0 0 var(--space-xs) 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.guia-ejemplo pre {
+  margin: 0;
+  font-size: var(--text-sm);
+  color: var(--color-text-primary);
+  overflow-x: auto;
+}
+
+/* Comprobación */
+.guia-comprobacion {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.guia-progreso-pregunta {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  background-color: var(--color-background);
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-border);
+  width: fit-content;
+}
+
+.guia-pregunta-titulo {
+  font-size: var(--text-lg);
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin: 0 0 var(--space-md) 0;
+}
+
+.guia-opciones {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.guia-opcion {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  background-color: var(--color-background);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  color: var(--color-text-primary);
+  cursor: pointer;
+  text-align: left;
+  transition: all var(--transition-fast);
+}
+
+.guia-opcion:hover:not(:disabled) {
+  border-color: var(--color-primary);
+  background-color: rgba(0,0,0,0.03);
+}
+
+.guia-opcion.seleccionada {
+  border-color: var(--color-primary);
+  background-color: var(--color-primary);
+  color: var(--color-text-inverse);
+}
+
+.guia-opcion.correcta {
+  border-color: var(--color-success);
+  background-color: rgba(16, 185, 129, 0.15);
+  color: var(--color-success);
+}
+
+.guia-opcion.incorrecta {
+  border-color: var(--color-danger);
+  background-color: rgba(239, 68, 68, 0.15);
+  color: var(--color-danger);
+}
+
+.guia-opcion:disabled {
+  cursor: not-allowed;
+}
+
+.guia-feedback {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  line-height: 1.6;
+  margin-top: var(--space-sm);
+}
+
+.guia-feedback.correcto {
+  background-color: rgba(16, 185, 129, 0.1);
+  border: 1px solid var(--color-success);
+  color: var(--color-success);
+}
+
+.guia-feedback.incorrecto {
+  background-color: rgba(239, 68, 68, 0.1);
+  border: 1px solid var(--color-danger);
+  color: var(--color-danger);
+}
+
+.guia-feedback-instruccion {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  margin-top: var(--space-sm);
+  font-style: italic;
+}
+
+/* Finalizada */
+.guia-finalizada {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+  text-align: center;
+  padding: var(--space-2xl) var(--space-lg);
+}
+
+.guia-icono-final {
+  color: var(--color-success);
+}
+
+.guia-finalizada h2 {
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.guia-finalizada p {
+  font-size: var(--text-base);
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+/* Tablas reales */
+.guia-tabla {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+  margin: var(--space-sm) 0;
+}
+
+.guia-tabla th {
+  background-color: var(--color-background);
+  color: var(--color-text-secondary);
+  font-weight: 600;
+  text-align: left;
+  padding: var(--space-xs) var(--space-sm);
+  border-bottom: 2px solid var(--color-border);
+}
+
+.guia-tabla td {
+  padding: var(--space-xs) var(--space-sm);
+  border-bottom: 1px solid var(--color-border-light);
+  color: var(--color-text-primary);
+}
+
+.guia-tabla tr:last-child td {
+  border-bottom: none;
+}
+
+.guia-codigo {
+  background-color: var(--color-background);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-sm) var(--space-md);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-text-secondary);
+  overflow-x: auto;
+  margin: var(--space-sm) 0;
 }

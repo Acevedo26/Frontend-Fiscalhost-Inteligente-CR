@@ -13,6 +13,45 @@
   gap: var(--space-sm);
 }
 
+/* Círculo pequeño siempre visible (cerrado) */
+.fiscal-circle {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-accent);
+  border: none;
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  animation: bounce 2.5s infinite;
+}
+
+.fiscal-circle:hover {
+  transform: scale(1.05);
+  background-color: var(--color-accent-dark);
+}
+
+.fiscal-circle .circle-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fiscal-circle .circle-icon svg {
+  width: 22px;
+  height: 22px;
+  fill: var(--color-text-inverse);
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+/* Trigger con tooltip: oculto por defecto, aparece en hover cuando está cerrado */
 .fiscal-trigger {
   display: flex;
   align-items: center;
@@ -22,33 +61,44 @@
   border-radius: var(--radius-full);
   box-shadow: var(--shadow-lg);
   transition: all var(--transition-fast);
-  animation: bounce 2s infinite;
+  border: none;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(10px);
+  pointer-events: none;
 }
 
 .fiscal-trigger:hover {
-  transform: scale(1.05);
+  transform: translateX(0) scale(1.02);
+}
+
+.fiscal:not(.fiscal-open):hover .fiscal-trigger {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0);
+  pointer-events: auto;
 }
 
 .trigger-icon {
-  width: 48px;
-  height: 48px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .trigger-icon svg {
   width: 100%;
   height: 100%;
+  fill: var(--color-text-inverse);
 }
 
 .trigger-tooltip {
-  padding-right: var(--space-sm);
   font-size: var(--text-sm);
   font-weight: 500;
   color: var(--color-text-inverse);
-}
-
-@keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
+  white-space: nowrap;
 }
 
 /* Window */
@@ -215,26 +265,6 @@
 .fiscal-input button svg {
   width: 18px;
   height: 18px;
-}
-
-/* Close Button */
-.fiscal-close-btn {
-  width: 56px;
-  height: 56px;
-  border-radius: var(--radius-full);
-  background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-dark) 100%);
-  box-shadow: var(--shadow-lg);
-  transition: all var(--transition-fast);
-  animation: pulse 2s infinite;
-}
-
-.fiscal-close-btn:hover {
-  transform: scale(1.1);
-}
-
-.fiscal-close-btn svg {
-  width: 100%;
-  height: 100%;
 }
 
 /* Responsive */
