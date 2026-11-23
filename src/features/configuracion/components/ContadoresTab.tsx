@@ -14,7 +14,7 @@ import { showWarning, showSuccess, showConfirm } from '../../../utils/alerts';
 import { useContadores, useInvitarContador, useRevocarContador } from '../../documentos/hooks/useReportes';
 
 export interface Contador {
-  id: number;
+  id: string;
   nombre: string;
   email: string;
   permisos: string;
