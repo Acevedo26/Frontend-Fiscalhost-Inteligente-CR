@@ -50,6 +50,16 @@ export interface RegistroResponse {
   mensaje?: string;
 }
 
+export interface ForgotPasswordRequest {
+  /** Format: email */
+  correo: string;
+}
+
+export interface ForgotPasswordResponse {
+  mensaje?: string;
+  correo?: string;
+}
+
 export interface AuthResponse {
   token: string;
   usuario: UsuarioInfo;

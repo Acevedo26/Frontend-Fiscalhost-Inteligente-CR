@@ -1,5 +1,5 @@
 import { apiClient } from '../../../api/axiosClient';
-import type { LoginRequest, LoginResponse, RegistroRequest, RegistroResponse } from '../types/auth';
+import type { LoginRequest, LoginResponse, RegistroRequest, RegistroResponse, ForgotPasswordRequest, ForgotPasswordResponse } from '../types/auth';
 
 export const AuthService = {
   login: async (credentials: LoginRequest): Promise<LoginResponse> => {
@@ -24,5 +24,12 @@ export const AuthService = {
       razonSocial: data.razonSocial ?? null,
     });
     return response.data;
-  }
+  },
+
+  forgotPassword: async (data: ForgotPasswordRequest): Promise<ForgotPasswordResponse> => {
+    const response = await apiClient.post<ForgotPasswordResponse>('/auth/forgot-password', {
+      correo: data.correo,
+    });
+    return response.data;
+  },
 };

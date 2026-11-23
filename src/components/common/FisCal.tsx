@@ -167,28 +167,31 @@ export const FisCal: FC = () => {
         </div>
       )}
 
-      {/* Círculo pequeño siempre visible: abre/cierra el asistente */}
-      <button
-        className="fiscal-circle"
-        onClick={() => setIsOpen(!isOpen)}
-        type="button"
-        aria-label="Abrir asistente FisCal"
-      >
-        <div className="circle-icon">{getIcon()}</div>
-      </button>
-
-      {/* Trigger con tooltip: aparece al hacer hover cuando está cerrado */}
-      {!isOpen && (
+      {/* Controller: círculo + trigger (trigger aparece arriba del círculo) */}
+      <div className="fiscal-controller">
+        {/* Círculo pequeño siempre visible: abre/cierra el asistente */}
         <button
-          className="fiscal-trigger"
-          onClick={() => setIsOpen(true)}
+          className="fiscal-circle"
+          onClick={() => setIsOpen(!isOpen)}
           type="button"
           aria-label="Abrir asistente FisCal"
         >
-          <div className="trigger-icon">{getIcon()}</div>
-          <span className="trigger-tooltip">¿Necesitas ayuda?</span>
+          <div className="circle-icon">{getIcon()}</div>
         </button>
-      )}
+
+        {/* Trigger con tooltip: aparece arriba del círculo al hacer hover */}
+        {!isOpen && (
+          <button
+            className="fiscal-trigger"
+            onClick={() => setIsOpen(true)}
+            type="button"
+            aria-label="Abrir asistente FisCal"
+          >
+            <span className="trigger-tooltip">¿Necesitas ayuda?</span>
+            <div className="trigger-icon">{getIcon()}</div>
+          </button>
+        )}
+      </div>
     </div>
   );
 };
