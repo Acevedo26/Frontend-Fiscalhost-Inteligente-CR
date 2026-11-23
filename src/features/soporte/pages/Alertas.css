@@ -110,6 +110,24 @@
   color: var(--color-text-inverse);
 }
 
+.calendario-date.hoy {
+  background-color: var(--color-primary);
+  color: var(--color-text-inverse);
+  font-weight: 700;
+}
+
+.calendario-date.tiene-vencimiento {
+  background-color: rgba(201, 112, 112, 0.12);
+}
+
+.calendario-date.tiene-recordatorio {
+  background-color: rgba(212, 168, 83, 0.12);
+}
+
+.calendario-date.empty {
+  pointer-events: none;
+}
+
 .calendario-date-vencimiento {
   background-color: rgba(201, 112, 112, 0.15);
   color: var(--color-danger);
@@ -118,6 +136,28 @@
 .calendario-date-recordatorio {
   background-color: rgba(212, 168, 83, 0.15);
   color: var(--color-warning);
+}
+
+.date-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  margin-top: 2px;
+}
+
+.date-dot-vencimiento {
+  background-color: var(--color-danger);
+}
+
+.date-dot-recordatorio {
+  background-color: var(--color-warning);
+}
+
+.legend-dot-hoy {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--color-primary);
 }
 
 .date-label {

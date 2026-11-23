@@ -3,11 +3,12 @@
    ============================================ */
 
 import React, { useState } from 'react';
-import { User, Bell, Shield, ClipboardList, UserPlus } from 'lucide-react';
+import { User, Bell, Shield, ClipboardList, UserPlus, FileText } from 'lucide-react';
 import './Configuracion.css';
-import { useConfiguracion, useAuditoriaLogs, useActividades } from '../hooks/useConfiguracion';
+import { useConfiguracion, useAuditoriaLogs, useActividades, usePerfilUsuario } from '../hooks/useConfiguracion';
 
-import { PerfilTab } from '../components/PerfilTab';
+import { PerfilUsuarioTab } from '../components/PerfilUsuarioTab';
+import { ConfiguracionTributariaTab } from '../components/ConfiguracionTributariaTab';
 import { NotificacionesTab } from '../components/NotificacionesTab';
 import { SeguridadTab } from '../components/SeguridadTab';
 import { AuditoriaTab } from '../components/AuditoriaTab';
@@ -16,20 +17,24 @@ import { ContadoresTab } from '../components/ContadoresTab';
 const USER_ROLE: 'admin' | 'viewer' = 'admin';
 
 export const Configuracion: React.FC = () => {
-  const [activeSection, setActiveSection] = useState('perfil');
+  const [activeSection, setActiveSection] = useState('perfil-usuario');
 
-  // Cargar cada recurso solo cuando su sección está visible para evitar que una
-  // configuración tributaria aún inexistente bloquee la bitácora de auditoría.
-  const isPerfilActivo = activeSection === 'perfil';
-  const { data: configuracionData } = useConfiguracion(isPerfilActivo);
+  // Cargar cada recurso solo cuando su sección está visible
+  const isPerfilUsuarioActivo = activeSection === 'perfil-usuario';
+  const isConfigTributariaActiva = activeSection === 'configuracion-tributaria';
+  const isActividadesActivo = isPerfilUsuarioActivo || isConfigTributariaActiva;
+
+  const { data: perfilUsuarioData } = usePerfilUsuario(isPerfilUsuarioActivo);
+  const { data: configuracionData } = useConfiguracion(isConfigTributariaActiva);
   const { data: logsData } = useAuditoriaLogs(activeSection === 'auditoria');
-  const { data: actividadesData } = useActividades(isPerfilActivo);
+  const { data: actividadesData } = useActividades(isActividadesActivo);
 
   const ACTIVIDADES = actividadesData ?? [];
   const logsToDisplay = logsData ?? [];
 
   const sections = [
-    { id: 'perfil', label: 'Perfil Tributario', icon: <User size={18} /> },
+    { id: 'perfil-usuario', label: 'Perfil de Usuario', icon: <User size={18} /> },
+    { id: 'configuracion-tributaria', label: 'Configuración Tributaria', icon: <FileText size={18} /> },
     { id: 'notificaciones', label: 'Notificaciones', icon: <Bell size={18} /> },
     { id: 'seguridad', label: 'Seguridad', icon: <Shield size={18} /> },
     { id: 'contadores', label: 'Contadores', icon: <UserPlus size={18} /> },
@@ -54,7 +59,8 @@ export const Configuracion: React.FC = () => {
         </div>
 
         <div className="config-content">
-          {activeSection === 'perfil' && <PerfilTab configuracionData={configuracionData} ACTIVIDADES={ACTIVIDADES} />}
+          {activeSection === 'perfil-usuario' && <PerfilUsuarioTab initialData={perfilUsuarioData} />}
+          {activeSection === 'configuracion-tributaria' && <ConfiguracionTributariaTab configuracionData={configuracionData} ACTIVIDADES={ACTIVIDADES} />}
           {activeSection === 'notificaciones' && <NotificacionesTab />}
           {activeSection === 'seguridad' && <SeguridadTab />}
           {activeSection === 'contadores' && <ContadoresTab />}
