@@ -3,7 +3,7 @@
    ============================================ */
 
 import React, { useState } from 'react';
-import { User, Bell, Shield, ClipboardList } from 'lucide-react';
+import { User, Bell, Shield, ClipboardList, UserPlus } from 'lucide-react';
 import './Configuracion.css';
 import { useConfiguracion, useAuditoriaLogs, useActividades } from '../hooks/useConfiguracion';
 
@@ -11,6 +11,7 @@ import { PerfilTab } from '../components/PerfilTab';
 import { NotificacionesTab } from '../components/NotificacionesTab';
 import { SeguridadTab } from '../components/SeguridadTab';
 import { AuditoriaTab } from '../components/AuditoriaTab';
+import { ContadoresTab } from '../components/ContadoresTab';
 
 const USER_ROLE: 'admin' | 'viewer' = 'admin';
 
@@ -31,6 +32,7 @@ export const Configuracion: React.FC = () => {
     { id: 'perfil', label: 'Perfil Tributario', icon: <User size={18} /> },
     { id: 'notificaciones', label: 'Notificaciones', icon: <Bell size={18} /> },
     { id: 'seguridad', label: 'Seguridad', icon: <Shield size={18} /> },
+    { id: 'contadores', label: 'Contadores', icon: <UserPlus size={18} /> },
     { id: 'auditoria', label: 'Log de Auditoría', icon: <ClipboardList size={18} /> },
   ];
 
@@ -55,6 +57,7 @@ export const Configuracion: React.FC = () => {
           {activeSection === 'perfil' && <PerfilTab configuracionData={configuracionData} ACTIVIDADES={ACTIVIDADES} />}
           {activeSection === 'notificaciones' && <NotificacionesTab />}
           {activeSection === 'seguridad' && <SeguridadTab />}
+          {activeSection === 'contadores' && <ContadoresTab />}
           {activeSection === 'auditoria' && <AuditoriaTab logsToDisplay={logsToDisplay} USER_ROLE={USER_ROLE} />}
         </div>
       </div>
