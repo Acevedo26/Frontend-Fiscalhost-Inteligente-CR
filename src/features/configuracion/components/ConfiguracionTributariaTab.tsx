@@ -1,41 +1,53 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card } from '../../../components/common/Card';
 import { Button } from '../../../components/common/Button';
 import { Input } from '../../../components/common/Input';
 import { Select } from '../../../components/common/Select';
 import { Badge } from '../../../components/common/Badge';
 import { Modal } from '../../../components/common/Modal';
-import { CheckCircle, AlertTriangle, Info } from 'lucide-react';
+import { CheckCircle, AlertTriangle, Info, Loader2 } from 'lucide-react';
 import { showWarning, showSuccess } from '../../../utils/alerts';
 import { ConfiguracionService } from '../services/ConfiguracionService';
-interface PerfilTabProps {
+
+interface ConfiguracionTributariaTabProps {
   configuracionData: any;
   ACTIVIDADES: any[];
 }
 
-export const PerfilTab: React.FC<PerfilTabProps> = ({ configuracionData, ACTIVIDADES }) => {
-  const [nombreCompleto, setNombreCompleto] = useState(configuracionData?.nombreCompleto || '');
-  const [email] = useState(configuracionData?.email || '');
-  const [tipoIdentificacion, setTipoIdentificacion] = useState(configuracionData?.tipoIdentificacion || 'FISICA');
-  const [identificacion, setIdentificacion] = useState(configuracionData?.identificacion || '');
+export const ConfiguracionTributariaTab: React.FC<ConfiguracionTributariaTabProps> = ({ configuracionData, ACTIVIDADES }) => {
   const [regimen, setRegimen] = useState<'CAPITAL' | 'UTILIDADES'>(configuracionData?.regimen || 'CAPITAL');
-  const [actividadQuery, setActividadQuery] = useState(configuracionData?.actividadEconomica || '');
-  const [actividadSeleccionada, setActividadSeleccionada] = useState(ACTIVIDADES[0]);
+  const [actividadQuery, setActividadQuery] = useState(configuracionData?.actividadEconomica || configuracionData?.descripcionActividad || '');
+  const [actividadSeleccionada, setActividadSeleccionada] = useState<any>(null);
   const [showActividadDropdown, setShowActividadDropdown] = useState(false);
   const [actividadError, setActividadError] = useState('');
   const [showCambioActividadModal, setShowCambioActividadModal] = useState(false);
   const [pendingActividad, setPendingActividad] = useState<any>(null);
   const [nise, setNise] = useState(configuracionData?.nise || '');
+  const [direccionFiscal, setDireccionFiscal] = useState(configuracionData?.direccionFiscal || '');
   const [showNiseTooltip, setShowNiseTooltip] = useState(false);
   const [niseValidado, setNiseValidado] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+
+  // Initialize actividadSeleccionada from configuracionData
+  useEffect(() => {
+    if (configuracionData?.codigoActividad && ACTIVIDADES.length > 0) {
+      const found = ACTIVIDADES.find((a: any) => a.value === configuracionData.codigoActividad);
+      if (found) {
+        setActividadSeleccionada(found);
+        setActividadQuery(found.label || found.nombre || '');
+      }
+    } else if (ACTIVIDADES.length > 0 && !actividadSeleccionada) {
+      setActividadSeleccionada(ACTIVIDADES[0]);
+      setActividadQuery(ACTIVIDADES[0].label || ACTIVIDADES[0].nombre || '');
+    }
+  }, [configuracionData, ACTIVIDADES]);
 
   const actividadesFiltradas = ACTIVIDADES.filter((a: any) =>
     (a.label || a.nombre || '').toLowerCase().includes(actividadQuery.toLowerCase())
   );
 
   const handleSelectActividad = (act: any) => {
-    if (act.value !== actividadSeleccionada.value) {
+    if (act.value !== actividadSeleccionada?.value) {
       setPendingActividad(act);
       setShowCambioActividadModal(true);
     }
@@ -54,23 +66,13 @@ export const PerfilTab: React.FC<PerfilTabProps> = ({ configuracionData, ACTIVID
   const handleValidarNise = () => {
     if (nise.length >= 6) {
       setNiseValidado(true);
-      showSuccess('NISE Validado', 'El número de servicio eléctrico fue verificado exitosamente ante la compañía distribuidora.');
+      showSuccess('NISE Validado', 'El número de servicio eléctrico fue verificado exitosamente.');
     } else {
       showWarning('NISE Inválido', 'El número de NISE debe contener al menos 6 dígitos.');
     }
   };
 
-  const handleGuardarPerfil = async () => {
-    if (!nombreCompleto || !nombreCompleto.trim()) {
-      showWarning('Nombre Requerido', 'El nombre completo del contribuyente no puede estar vacío.');
-      return;
-    }
-
-    if (!identificacion || !identificacion.trim()) {
-      showWarning('Identificación Requerida', 'El número de identificación tributaria es obligatorio.');
-      return;
-    }
-
+  const handleGuardarConfiguracion = async () => {
     if (!actividadSeleccionada) {
       showWarning('Actividad Requerida', 'Debe seleccionar una actividad económica del RUT.');
       return;
@@ -81,12 +83,17 @@ export const PerfilTab: React.FC<PerfilTabProps> = ({ configuracionData, ACTIVID
       return;
     }
 
+    if (!direccionFiscal || !direccionFiscal.trim()) {
+      showWarning('Dirección Requerida', 'La dirección fiscal es obligatoria.');
+      return;
+    }
+
     setIsSaving(true);
     let saveOk = false;
     try {
       await ConfiguracionService.guardarConfiguracion({
         codigoActividad: actividadSeleccionada.value,
-        direccionFiscal: 'San José, Costa Rica',
+        direccionFiscal: direccionFiscal.trim(),
         nise: nise.trim(),
       });
       saveOk = true;
@@ -98,8 +105,8 @@ export const PerfilTab: React.FC<PerfilTabProps> = ({ configuracionData, ACTIVID
 
     if (saveOk) {
       showSuccess(
-        'Perfil Actualizado',
-        'Los datos del perfil tributario y fiscal fueron actualizados correctamente.'
+        'Configuración Guardada',
+        'La configuración tributaria fue actualizada correctamente.'
       );
     }
   };
@@ -107,35 +114,10 @@ export const PerfilTab: React.FC<PerfilTabProps> = ({ configuracionData, ACTIVID
   return (
     <>
       <Card variant="outlined" padding="md">
-        <h3>Perfil Tributario</h3>
-        <div className="config-form">
-          <div className="form-row">
-            <Input
-              label="Nombre Completo"
-              value={nombreCompleto}
-              onChange={(e: any) => setNombreCompleto(e.target.value)}
-            />
-            <Input label="Email" type="email" value={email} />
-          </div>
-          <div className="form-row">
-            <Select
-              label="Tipo de Identificación"
-              options={[
-                { label: 'Cédula Física', value: 'FISICA' },
-                { label: 'Cédula Jurídica', value: 'JURIDICA' },
-                { label: 'DIMEX', value: 'DIMEX' },
-                { label: 'NITE', value: 'NITE' }
-              ]}
-              value={tipoIdentificacion}
-              onChange={(val) => setTipoIdentificacion(val)}
-            />
-            <Input
-              label="Número de Identificación"
-              value={identificacion}
-              onChange={(e: any) => setIdentificacion(e.target.value)}
-            />
-          </div>
+        <h3>Configuración Tributaria</h3>
+        <p className="config-desc">Actividad económica, domicilio fiscal y régimen</p>
 
+        <div className="config-form">
           <div className="actividad-field">
             <label className="input-label">Actividad Económica (RUT)</label>
             <div className="typeahead-wrap">
@@ -150,7 +132,7 @@ export const PerfilTab: React.FC<PerfilTabProps> = ({ configuracionData, ACTIVID
                   {actividadesFiltradas.map((a: any) => (
                     <button key={a.value} className="typeahead-option" onClick={() => handleSelectActividad(a)}>
                       <span className="typeahead-code">{a.value}</span>
-                      <span>{a.label.split('—')[1]?.trim()}</span>
+                      <span>{a.label?.split('—')[1]?.trim() || a.nombre}</span>
                     </button>
                   ))}
                 </div>
@@ -186,9 +168,18 @@ export const PerfilTab: React.FC<PerfilTabProps> = ({ configuracionData, ACTIVID
             </div>
             {niseValidado && (
               <div className="nise-success">
-                <CheckCircle size={14} /> Domicilio fiscal registrado correctamente
+                <CheckCircle size={14} /> NISE validado
               </div>
             )}
+          </div>
+
+          <div className="form-row">
+            <Input
+              label="Dirección Fiscal"
+              value={direccionFiscal}
+              onChange={(e: any) => setDireccionFiscal(e.target.value)}
+              placeholder="Provincia, Cantón, Distrito, Direccón exacta"
+            />
           </div>
 
           <div className="form-row">
@@ -197,9 +188,10 @@ export const PerfilTab: React.FC<PerfilTabProps> = ({ configuracionData, ACTIVID
               value={regimen}
               onChange={(v) => setRegimen(v as 'CAPITAL' | 'UTILIDADES')} />
           </div>
+
           <div className="form-actions">
-            <Button variant="primary" onClick={handleGuardarPerfil} disabled={isSaving}>
-              {isSaving ? 'Guardando...' : 'Guardar Cambios'}
+            <Button variant="primary" onClick={handleGuardarConfiguracion} disabled={isSaving}>
+              {isSaving ? <Loader2 size={16} className="animate-spin" /> : 'Guardar Cambios'}
             </Button>
           </div>
         </div>

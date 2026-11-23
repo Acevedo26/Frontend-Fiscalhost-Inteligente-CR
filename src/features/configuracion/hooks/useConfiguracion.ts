@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { ConfiguracionService, AuditoriaService } from '../services/ConfiguracionService';
 
 export const useConfiguracion = (enabled = true) => {
@@ -7,6 +7,25 @@ export const useConfiguracion = (enabled = true) => {
     queryFn: () => ConfiguracionService.getMiConfiguracion(),
     enabled,
     retry: false,
+  });
+};
+
+export const usePerfilUsuario = (enabled = true) => {
+  return useQuery({
+    queryKey: ['perfil-usuario'],
+    queryFn: () => ConfiguracionService.getMiPerfil(),
+    enabled,
+    retry: false,
+  });
+};
+
+export const useActualizarPerfil = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (data: any) => ConfiguracionService.actualizarPerfil(data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['perfil-usuario'] });
+    },
   });
 };
 
