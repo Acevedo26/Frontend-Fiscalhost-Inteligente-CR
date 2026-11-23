@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Layout } from './components/layout';
 import { Login } from './features/auth/pages/Login';
 import { Registro } from './features/auth/pages/Registro';
+import { ForgotPassword } from './features/auth/pages/ForgotPassword';
 import { Dashboard } from './features/dashboard/pages/Dashboard';
 import { Ingresos } from './features/finanzas/pages/Ingresos';
 import { Impuestos } from './features/obligaciones/pages/Impuestos';
@@ -28,6 +29,7 @@ function App() {
       <BrowserRouter>
       <Routes>
         <Route path="/login" element={<Login />} />
+        <Route path="/auth/forgot-password" element={<ForgotPassword />} />
         <Route path="/register" element={<Registro />} />
         <Route element={<Layout />}>
           <Route path="/" element={<Dashboard />} />

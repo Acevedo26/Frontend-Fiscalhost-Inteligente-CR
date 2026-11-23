@@ -110,10 +110,7 @@ export const Login: FC = () => {
 
   const handleForgotPassword = async (e: MouseEvent) => {
     e.preventDefault();
-    await showInfo(
-      'Recuperación de Contraseña',
-      'Para restablecer el acceso a su cuenta tributaria, comuníquese por los canales oficiales de la Administración Tributaria o con su contador asignado.'
-    );
+    navigate('/auth/forgot-password');
   };
 
   return (
