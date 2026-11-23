@@ -3,20 +3,8 @@ import { Card } from '../../../components/common/Card';
 
 import { ChevronRight, BarChart2, ClipboardList, DollarSign, FileText, Upload } from 'lucide-react';
 import { ExportarModal } from '../components/ExportarModal';
-import { InvitarContadorModal } from '../components/InvitarContadorModal';
-import { RevocarContadorModal } from '../components/RevocarContadorModal';
-import { AutorizarContadorCard } from '../components/AutorizarContadorCard';
 
 import './Reportes.css';
-
-export interface Contador {
-  id: number;
-  nombre: string;
-  email: string;
-  permisos: string;
-  expiracion: string;
-  estado: 'ACTIVO' | 'EXPIRADO' | 'PENDIENTE';
-};
 
 export const getTipoReporteLabel = (tipo: string) => {
   const labels: Record<string, string> = {
@@ -27,26 +15,9 @@ export const getTipoReporteLabel = (tipo: string) => {
 };
 
 export const Reportes: React.FC = () => {
-  const [contadores, setContadores] = useState<Contador[]>([]);
-
   // HU-015: exportar
   const [showExportModal, setShowExportModal] = useState(false);
   const [reporteSeleccionado, setReporteSeleccionado] = useState<string | null>(null);
-
-  // HU-016: invitar
-  const [showModalInvitar, setShowModalInvitar] = useState(false);
-
-  // HU-016: revocar
-  const [revocarContador, setRevocarContador] = useState<Contador | null>(null);
-
-  const handleInvitar = (nuevo: Contador) => {
-    setContadores([...contadores, nuevo]);
-  };
-
-  const handleRevocar = (contador: Contador) => {
-    setContadores(contadores.filter(c => c.id !== contador.id));
-    setRevocarContador(null);
-  };
 
   return (
     <div className="reportes-page">
@@ -89,29 +60,11 @@ export const Reportes: React.FC = () => {
         </Card>
       </div>
 
-      <AutorizarContadorCard
-        contadores={contadores}
-        onInvitar={() => setShowModalInvitar(true)}
-        onRevocar={setRevocarContador}
-      />
-
       <ExportarModal
         isOpen={showExportModal}
         onClose={() => setShowExportModal(false)}
         reporteSeleccionado={reporteSeleccionado}
         getTipoReporteLabel={getTipoReporteLabel}
-      />
-
-      <InvitarContadorModal
-        isOpen={showModalInvitar}
-        onClose={() => setShowModalInvitar(false)}
-        onInvitar={handleInvitar}
-      />
-
-      <RevocarContadorModal
-        contador={revocarContador}
-        onClose={() => setRevocarContador(null)}
-        onRevocar={handleRevocar}
       />
     </div>
   );
