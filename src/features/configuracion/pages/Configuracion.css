@@ -599,7 +599,241 @@
 .historial-anterior { color: var(--color-danger); text-decoration: line-through; }
 .historial-nuevo { color: var(--color-success); font-weight: 600; }
 
+/* ============================================
+   CONTADORES (movido desde Reportes)
+   ============================================ */
+.contadores-tab {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.contadores-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+}
+
+.contadores-header h2 {
+  font-size: var(--text-xl);
+  margin: 0;
+  color: var(--color-text-primary);
+}
+
+.contadores-header p {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: var(--text-sm);
+}
+
+.contadores-resumen {
+  display: flex;
+  gap: var(--space-md);
+}
+
+.resumen-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-md);
+  background-color: var(--color-background);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+}
+
+.resumen-valor {
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+.resumen-label {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+.contadores-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.contador-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-md);
+  background-color: var(--color-background);
+  border-radius: var(--radius-lg);
+}
+
+.contador-avatar {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-primary);
+  color: var(--color-text-inverse);
+  border-radius: var(--radius-full);
+  font-weight: 600;
+  font-size: var(--text-sm);
+}
+
+.contador-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.contador-nombre {
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+.contador-email {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+.contador-details {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+}
+
+.contador-vacio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-lg);
+  color: var(--color-text-muted);
+}
+
+.action-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-xs);
+  border-radius: var(--radius-md);
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: var(--color-text-muted);
+  transition: all var(--transition-fast);
+}
+
+.action-icon:hover {
+  color: var(--color-text-primary);
+  background-color: var(--color-border-light);
+}
+
+.action-icon-danger {
+  color: var(--color-danger);
+}
+
+.action-icon-danger:hover {
+  background-color: rgba(239, 68, 68, 0.1);
+  color: var(--color-dark);
+}
+
+/* Invitar Form */
+.invitar-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.permisos-select label {
+  display: block;
+  margin-bottom: var(--space-sm);
+  font-size: var(--text-sm);
+  font-weight: 500;
+}
+
+.permisos-options {
+  display: flex;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+}
+
+.permiso-btn {
+  padding: var(--space-sm) var(--space-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  transition: all var(--transition-fast);
+  background: transparent;
+  cursor: pointer;
+}
+
+.permiso-btn:hover {
+  border-color: var(--color-border-dark);
+}
+
+.permiso-btn-active {
+  border-color: var(--color-primary);
+  background-color: rgba(26, 31, 46, 0.05);
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-sm);
+  margin-top: var(--space-md);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--color-border-light);
+}
+
+/* HU-016: Expiración próxima */
+.expiracion-prox {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  color: var(--color-warning-dark);
+  font-weight: 500;
+}
+
+/* HU-016: Invitación éxito */
+.inv-success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-xl);
+  text-align: center;
+}
+
+.inv-success p { font-size: var(--text-sm); color: var(--color-text-secondary); }
+
+/* HU-016: Revocar */
+.revocar-modal { display: flex; flex-direction: column; gap: var(--space-md); }
+
+.revocar-warning {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-md);
+  padding: var(--space-md);
+  background-color: rgba(201,112,112,0.08);
+  border-radius: var(--radius-md);
+}
+
+.revocar-warning p { font-size: var(--text-sm); color: var(--color-text-secondary); margin: 0; }
+
 /* Responsive */
+@media (max-width: 768px) {
+  .contadores-header { flex-direction: column; align-items: flex-start; }
+  .contadores-resumen { flex-direction: column; }
+  .contador-item { flex-wrap: wrap; }
+  .contador-details { width: 100%; flex-direction: row; }
+}
 @media (max-width: 768px) {
   .config-layout { grid-template-columns: 1fr; }
   .config-sidebar { flex-direction: row; flex-wrap: wrap; }
